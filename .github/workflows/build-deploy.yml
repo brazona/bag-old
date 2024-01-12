@@ -82,9 +82,9 @@ jobs:
       - name: Business Administration Games
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         env:
-          MICROSERVICES_NAME: bag
+          MICROSERVICES_NAME: app-ui
         with:
-          context: ${{ env.MICROSERVICES_NAME }}
+          context: ./${{ env.MICROSERVICES_NAME }}
           push: true
           tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.MICROSERVICES_NAME }}:${{needs.pre-build.outputs.build_nr}}
 
