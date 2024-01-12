@@ -1,0 +1,35 @@
+name: Run Test 
+on:
+  pull_request:
+    branches:
+      - 'main'
+      - 'releases/**'
+      - 'develop'
+    paths-ignore:
+      - 'app/resources/**'
+  workflow_dispatch:
+jobs:
+  build:
+    name: Run Maven Project
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+          
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Build with Maven
+        #run: mvn -f ./app/app-api/ clean install
+        run: mvn clean install test
