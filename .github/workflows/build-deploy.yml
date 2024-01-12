@@ -85,6 +85,7 @@ jobs:
           MICROSERVICES_NAME: app-ui
         with:
           context: ./${{ env.MICROSERVICES_NAME }}
+
           push: true
           tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.MICROSERVICES_NAME }}:${{needs.pre-build.outputs.build_nr}}
 
