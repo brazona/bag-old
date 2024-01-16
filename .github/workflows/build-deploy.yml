@@ -95,13 +95,15 @@ jobs:
     permissions: write-all
     needs: [build]
     steps:
-      - name: Replacing variables in deployment.yaml file 
-        uses: microsoft/variable-substitution@v1 
+      - uses: actions/checkout@v2
+      - name: Replace Variables
+        uses: im-open/variable-substitution@v2.0.5 #v2 or v2.0 can also be used
         with:
-          files: 'app-ui/deployment.yaml'
+          files: './app-ui/deployment.yaml'
         env:
-          Var1.key1: "$NAMESPACE"
-          SECRET: ${{ secrets.NAMESPACE }}   
+          # Substitutions are case sensitive and must match what is present
+          # in the file with substitutions (in this case appsettings.json)
+          metadata.namespace: ${{ secrets.NAMESPACE }}   
       - name: Test output
         run: cat 'app-ui/deployment.yaml'
       - name: Kubectl Apply
@@ -110,3 +112,4 @@ jobs:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
         with:
           args: apply -f ./app-ui/deployment.yaml
+
