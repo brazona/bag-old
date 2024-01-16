@@ -90,7 +90,7 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.MICROSERVICES_NAME }}:${{needs.pre-build.outputs.build_nr}}
       - name: Extracts value Image Docker
         id: image
-        run: echo "image_docker=${{ env.REGISTRY }}/${{ github.repository }}/${{ env.MICROSERVICES_NAME }}:${{needs.pre-build.outputs.build_nr}} >> $GITHUB_OUTPUT
+        run: echo "image_docker=${{ env.REGISTRY }}/${{ github.repository }}/${{ env.MICROSERVICES_NAME }}:${{needs.pre-build.outputs.build_nr}}" >> $GITHUB_OUTPUT
       
   deploy:
     name: Deploy Kubernetes
