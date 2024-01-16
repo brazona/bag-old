@@ -100,8 +100,14 @@ jobs:
       name: ${{needs.pre-build.outputs.env_name}}
     needs: [build, pre-build]
     steps:
-      - uses: actions/checkout@v2 
-      - name: Deploy 
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Set Kubernetes Context
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+      - name: Deploy to Cluster
         run: | 
           manifest=`cat "./app-ui/deployment.yaml" | sed 's/$NAMESPACE/${{ secrets.NAMESPACE }}/ ; s/$DNS/${{ secrets.DNS }}/ ; s/$TAG/${{needs.build.outputs.image_docker}}/' ./app-ui/deployment.yaml`
-          echo "$manifest" | kubectl apply -f - --kubeconfig=${{ secrets.KUBE_CONFIG }}
+          echo "$manifest" | kubectl apply -f -
