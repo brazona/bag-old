@@ -96,7 +96,9 @@ jobs:
     name: Deploy Kubernetes
     runs-on: ubuntu-latest
     permissions: write-all
-    needs: [build]
+    environment:
+      name: ${{needs.pre-build.outputs.env_name}}
+    needs: [build, pre-build]
     steps:
       - uses: actions/checkout@v2 
       - name: Deploy 
