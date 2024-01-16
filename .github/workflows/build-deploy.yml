@@ -113,5 +113,3 @@ jobs:
         with:
           args: apply -f ./app-ui/deployment.yaml
 
-
-          app-ui\deployment.yaml
