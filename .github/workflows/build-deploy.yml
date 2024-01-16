@@ -52,6 +52,8 @@ jobs:
     environment:
       name: ${{needs.pre-build.outputs.env_name}}
     needs: [pre-build]
+    outputs:
+      image_docker: ${{ steps.image.outputs.image_docker }}
     steps:
       - name: Cache Maven packages
         uses: actions/cache@v1
@@ -78,16 +80,17 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build Docker Image
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         env:
           MICROSERVICES_NAME: app-ui
         with:
           context: ./${{ env.MICROSERVICES_NAME }}
-
           push: true
           tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.MICROSERVICES_NAME }}:${{needs.pre-build.outputs.build_nr}}
+      - name: Extracts value Image Docker
+        id: image
+        run: echo "image_docker=${{ env.REGISTRY }}/${{ github.repository }}/${{ env.MICROSERVICES_NAME }}:${{needs.pre-build.outputs.build_nr}} >> $GITHUB_OUTPUT
       
   deploy:
     name: Deploy Kubernetes
@@ -97,14 +100,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2 
       - name: Deploy 
-        run: |
-          template=`cat "./app-ui/deployment.yaml" | sed 's/$NAMESPACE/development/ ; s/$DNS/bag.brazona.com.br/ ; s/$IMAGE/app-ui:9-snapshot/' ./app-ui/deployment.yaml`
-          echo "$template" | kubectl apply -f - --kubeconfig=kube.conf
-      #- name: Kubectl Apply
-      #  uses: actions-hub/kubectl@master
-      #  env:
-      #    KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-      #  with:
-      #    args: apply -f ./app-ui/deployment.yaml
+        run: | 
+          manifest=`cat "./app-ui/deployment.yaml" | sed 's/$NAMESPACE/${{ secrets.NAMESPACE }}/ ; s/$DNS/${{ secrets.DNS }}/ ; s/$IMAGE/${{needs.build.outputs.image_docker}}/' ./app-ui/deployment.yaml`
+          echo "$manifest" | kubectl apply -f - --kubeconfig=${{ secrets.KUBE_CONFIG }}
       
 
