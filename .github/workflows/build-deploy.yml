@@ -98,12 +98,12 @@ jobs:
       - name: Replacing variables in deployment.yaml file 
         uses: microsoft/variable-substitution@v1 
         with:
-          files: './app-ui/deployment.yaml'
+          files: 'app-ui/deployment.yaml'
         env:
           Var1.key1: "$NAMESPACE"
           SECRET: ${{ secrets.NAMESPACE }}   
       - name: Test output
-        run: cat './app-ui/deployment.yaml'
+        run: cat 'app-ui/deployment.yaml'
       - name: Kubectl Apply
         uses: actions-hub/kubectl@master
         env:
