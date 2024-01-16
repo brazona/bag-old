@@ -99,7 +99,7 @@ jobs:
       - name: Deploy 
         run: |
           template=`cat "./app-ui/deployment.yaml" | sed 's/$NAMESPACE/development/ ; s/$DNS/bag.brazona.com.br/ ; s/$IMAGE/app-ui:9-snapshot/' ./app-ui/deployment.yaml`
-          echo "$template" | kubectl apply -f - --kubeconfig=${{ secrets.KUBE_CONFIG }}
+          echo "$template" | kubectl apply -f - --kubeconfig=kube.conf
       #- name: Kubectl Apply
       #  uses: actions-hub/kubectl@master
       #  env:
