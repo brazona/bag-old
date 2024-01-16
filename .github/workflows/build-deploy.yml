@@ -109,5 +109,5 @@ jobs:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
       - name: Deploy to Cluster
         run: | 
-          manifest=`cat "./app-ui/deployment.yaml" | sed 's/$NAMESPACE/${{ secrets.NAMESPACE }}/ ; s/$DNS/${{ secrets.DNS }}/ ; s/$TAG/${{needs.build.outputs.image_docker}}/' ./app-ui/deployment.yaml`
+          manifest=`cat "./app-ui/deployment.yaml" | sed 's/$NAMESPACE/${{ vars.NAMESPACE }}/ ; s/$DNS/${{ vars.DNS }}/ ; s/$TAG/${{needs.build.outputs.image_docker}}/' ./app-ui/deployment.yaml`
           echo "$manifest" | kubectl apply -f -
