@@ -25,7 +25,7 @@ spec:
         - name: pipeline-docker-registry
       containers:
       - name: app-ui
-        image: $IMAGE
+        image: ghcr.io/brazona/business-administration-games/app-ui:$TAG
         ports:
         - containerPort: 8080
           protocol: TCP

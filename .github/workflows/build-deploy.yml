@@ -90,7 +90,7 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.MICROSERVICES_NAME }}:${{needs.pre-build.outputs.build_nr}}
       - name: Extracts value Image Docker
         id: image
-        run: echo "image_docker=${{ env.REGISTRY }}/${{ github.repository }}/${{ env.MICROSERVICES_NAME }}:${{needs.pre-build.outputs.build_nr}}" >> $GITHUB_OUTPUT
+        run: echo "image_docker=${{needs.pre-build.outputs.build_nr}}" >> $GITHUB_OUTPUT
       
   deploy:
     name: Deploy Kubernetes
@@ -101,7 +101,5 @@ jobs:
       - uses: actions/checkout@v2 
       - name: Deploy 
         run: | 
-          manifest=`cat "./app-ui/deployment.yaml" | sed 's/$NAMESPACE/${{ secrets.NAMESPACE }}/ ; s/$DNS/${{ secrets.DNS }}/ ; s/$IMAGE/${{needs.build.outputs.image_docker}}/' ./app-ui/deployment.yaml`
+          manifest=`cat "./app-ui/deployment.yaml" | sed 's/$NAMESPACE/${{ secrets.NAMESPACE }}/ ; s/$DNS/${{ secrets.DNS }}/ ; s/$TAG/${{needs.build.outputs.image_docker}}/' ./app-ui/deployment.yaml`
           echo "$manifest" | kubectl apply -f - --kubeconfig=${{ secrets.KUBE_CONFIG }}
-      
-
