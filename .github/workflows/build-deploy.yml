@@ -89,17 +89,24 @@ jobs:
           push: true
           tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.MICROSERVICES_NAME }}:${{needs.pre-build.outputs.build_nr}}
       
+  deploy:
+    name: Deploy Image Docker in Kube
+    runs-on: ubuntu-latest
+    permissions: write-all
+    needs: [build]
+    steps:
       - name: Replacing variables in deployment.yaml file 
         uses: microsoft/variable-substitution@v1 
         with:
           files: './app-ui/deployment.yaml'
         env:
-          Var1: "$NAMESPACE"
-          SECRET: ${{ secrets.NAMESPACE }}
+          Var1.key1: "$NAMESPACE"
+          SECRET: ${{ secrets.NAMESPACE }}   
+      - name: Test output
+        run: cat './app-ui/deployment.yaml'
       - name: Kubectl Apply
         uses: actions-hub/kubectl@master
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
         with:
           args: apply -f ./app-ui/deployment.yaml
-      
