@@ -90,26 +90,21 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.MICROSERVICES_NAME }}:${{needs.pre-build.outputs.build_nr}}
       
   deploy:
-    name: Deploy Image Docker in Kube
+    name: Deploy Kubernetes
     runs-on: ubuntu-latest
     permissions: write-all
     needs: [build]
     steps:
-      - uses: actions/checkout@v2
-      - name: Replace Variables
-        uses: im-open/variable-substitution@v2.0.5 #v2 or v2.0 can also be used
-        with:
-          files: './app-ui/deployment.yaml'
-        env:
-          # Substitutions are case sensitive and must match what is present
-          # in the file with substitutions (in this case appsettings.json)
-          metadata.namespace: ${{ secrets.NAMESPACE }}   
-      - name: Test output
-        run: cat 'app-ui/deployment.yaml'
-      - name: Kubectl Apply
-        uses: actions-hub/kubectl@master
-        env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-        with:
-          args: apply -f ./app-ui/deployment.yaml
+      - uses: actions/checkout@v2 
+      - name: Deploy 
+        run: |
+          sed 's/$NAMESPACE/development/ ; s/$DNS/bag.brazona.com.br/ ; s/$IMAGE/app-ui:9-snapshot/' ./app-ui/deployment.yaml && \
+          kubectl apply -f ./app-ui/deployment.yaml --kubeconfig=${{ secrets.KUBE_CONFIG }}
+      #- name: Kubectl Apply
+      #  uses: actions-hub/kubectl@master
+      #  env:
+      #    KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+      #  with:
+      #    args: apply -f ./app-ui/deployment.yaml
+      
 
