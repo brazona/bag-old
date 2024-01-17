@@ -27,7 +27,7 @@ spec:
       - name: app-ui
         image: ghcr.io/brazona/business-administration-games/app-ui:$TAG
         ports:
-        - containerPort: 4200
+        - containerPort: 80
           protocol: TCP
       securityContext:
         runAsUser: 0
@@ -44,8 +44,8 @@ spec:
   type: ClusterIP
   ports:
     - protocol: TCP
-      port: 4200
-      targetPort: 4200
+      port: 80
+      targetPort: 80
 
 ---
 apiVersion: extensions/v1beta1
@@ -63,4 +63,4 @@ spec:
           - path: /
             backend:
               serviceName: app-ui-service
-              servicePort: 4200
+              servicePort: 80
