@@ -1,0 +1,8 @@
+version: '3.5'
+services:
+  app-ui:
+    container_name: app-ui
+    build: ./app-ui/
+    ports:
+      - "8282:80"
+    restart: unless-stopped
