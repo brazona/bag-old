@@ -1,28 +1,36 @@
-# Stage 1: Compile and Build angular codebase
 
-# Use official node image as the base image
+#################
+# Build the app #
+#################
 FROM node:latest as build
 
-# Set the working directory
-WORKDIR /usr/local/app
+# Defaults to production, docker-compose overrides this to development on build and run.
+ARG ENVIRONMENT=dockerfile
+ARG VERSION=1.0.10
 
-# Add the source code to app
-COPY ./ /usr/local/app/
+ENV APP_VERSION $VERSION
+ENV APP_ENVIRONMENT $ENVIRONMENT
 
-# Install all the dependencies
+RUN echo ${VERSION}
+RUN echo ${ENVIRONMENT}
+RUN echo ${APP_VERSION}
+RUN echo ${APP_ENVIRONMENT}
+WORKDIR /usr/src/app
+COPY . .
+
 RUN npm install
-
-# Generate the build of the application
 RUN npm run build --prod
 
-# Stage 2: Serve app with nginx server
-
-# Use official nginx image as the base image
+################
+# Run in NGINX #
+################
 FROM nginx:latest
 
-# Copy the build output to replace the default nginx contents.
 COPY nginx.conf  /etc/nginx/conf.d/default.conf
-COPY --from=build /usr/local/app/dist/app-ui /usr/share/nginx/html
-
+COPY --from=build /usr/src/app/dist/app-ui /usr/share/nginx/html
+#ENTRYPOINT ["nginx", "-g", "daemon off;"]
+# When the container starts, replace the env.js with values from environment variables
+CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]
 # Expose port 80
 EXPOSE 80
+
