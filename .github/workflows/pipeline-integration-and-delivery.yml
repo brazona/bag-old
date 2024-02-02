@@ -33,7 +33,7 @@ jobs:
         run: echo "defined_environment=development" >> $GITHUB_OUTPUT
       - name: Defined Environment
         id: env_name
-        run: echo "env_name=$defined_environment >> $GITHUB_OUTPUT
+        run: echo "env_name=$defined_environment" >> $GITHUB_OUTPUT
         
   oper_prepare:
     name: Preparete Operation 
