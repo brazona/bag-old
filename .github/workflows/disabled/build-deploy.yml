@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - 'main'
-      - 'releases/**'
+      - 'release/**'
       - 'develop'
     paths-ignore:
       - 'app/resources/**'
@@ -17,14 +17,14 @@ env:
        github.ref_name == 'main' && ''
     || github.ref_name == 'develop'    && 'SNAPSHOT'
     || github.ref_name == 'release'    && 'RELEASE'
-    ||                                'snapshot'
     }}
   ENVIRONMENT: |-
     ${{
        github.ref_name == 'main'       && 'production'
+    || github.ref_name == 'main'       && 'staging'
+    || github.ref_name == 'release'    && 'homologation'
     || github.ref_name == 'develop'    && 'development'
-    || github.ref_name == 'release'    && 'staging'
-    ||                                'development'
+
     }}
 jobs:
   pre-build:
@@ -111,3 +111,4 @@ jobs:
         run: | 
           manifest=`cat "./app-ui/deployment.yaml" | sed 's/$NAMESPACE/${{ vars.NAMESPACE }}/ ; s/$DNS/${{ vars.DNS }}/ ; s/$TAG/${{needs.build.outputs.image_docker}}/ ; s/$APP_VERSION/${{needs.build.outputs.image_docker}}/ ; s/$APP_ENVIRONMENT/${{needs.pre-build.outputs.env_name}}/' ./app-ui/deployment.yaml`
           echo "$manifest" | kubectl apply -f -
+
