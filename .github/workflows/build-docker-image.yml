@@ -8,10 +8,7 @@ on:
       build_number_org:
         required: true
         type: string
-      image_name:
-        required: true
-        type: string
-      path_dockerfile:
+      app_dir:
         required: true
         type: string
 env:
@@ -24,6 +21,9 @@ jobs:
     environment:
       name: ${{ inputs.env_name }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:
@@ -34,10 +34,10 @@ jobs:
       - name: Docker Build and Push Image
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         env:
-          MICROSERVICES_NAME: ${{ inputs.image_name}}
+          APP_DIR: ${{ inputs.app_dir}}
         with:
-          context: ${{ inputs.path_dockerfile}}
+          context: ./${{ env.APP_DIR }}
           push: true
-          tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.MICROSERVICES_NAME }}:${{ inputs.build_number_org }}
+          tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.APP_DIR }}:${{ inputs.build_number_org }}
 
       
