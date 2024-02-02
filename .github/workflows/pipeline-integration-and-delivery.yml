@@ -23,14 +23,14 @@ jobs:
       env_name: ${{ steps.env_name.outputs.env_name }}
     steps:
       - name: Environment Production
-        if: contains(env.BRANCH_NAME, 'main')
-        run: echo "defined_environment = 'production' >> $GITHUB_OUTPUT
+        if: contains(${{ env.BRANCH_NAME }}, 'main')
+        run: echo "defined_environment=production" >> $GITHUB_OUTPUT
       - name: Environment Homologation
-        if: startsWith(env.BRANCH_NAME, 'release')
-        run: echo "defined_environment = 'homologation' >> $GITHUB_OUTPUT
+        if: startsWith(${{ env.BRANCH_NAME }}, 'release')
+        run: echo "defined_environment=homologation" >> $GITHUB_OUTPUT
       - name: Environment Development
-        if: contains(env.BRANCH_NAME, 'develop')
-        run: echo "defined_environment = 'development' >> $GITHUB_OUTPUT
+        if: contains(${{ env.BRANCH_NAME }}, 'develop')
+        run: echo "defined_environment=development" >> $GITHUB_OUTPUT
       - name: Defined Environment
         id: env_name
         run: echo "env_name=$defined_environment >> $GITHUB_OUTPUT
