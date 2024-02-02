@@ -10,7 +10,7 @@
 	<parent>
 		<groupId>br.brazona</groupId>
 		<artifactId>bag</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<build>
 		<resources>
