@@ -89,17 +89,12 @@ jobs:
     strategy:
       max-parallel: 2
       matrix:
-        #images: [app-ui, app-api]
-        #paths: [./app-ui, ./app-api]
         include:
           - image: "app-ui"
-          - image: "app-api"
+          #- image: "app-api"
     with:
       env_name: ${{ needs.env_preparate.outputs.env_name }}
       build_number_org: ${{github.run_number}}-SNAPSHOT
-      #image_name: ${{ matrix.images }}
-      #path_dockerfile: ${{ matrix.paths }}
-      #image_name: ${{ matrix.image }}
       app_dir: ${{ matrix.image }}
 
   call-deploy-app:
