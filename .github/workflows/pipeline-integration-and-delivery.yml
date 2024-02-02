@@ -94,10 +94,12 @@ jobs:
   call-deploy-app:
     needs: [oper_prepare, call-build-app]
     if: ${{needs.oper_prepare.outputs.is_deploy}} 
+    permissions: write-all
     uses: ./.github/workflows/deploy.yml
   call-release:
     needs: [oper_prepare, call-deploy-app]
     if: ${{needs.oper_prepare.outputs.is_release}} 
+    permissions: write-all
     uses: ./.github/workflows/create-release.yml
 
 
