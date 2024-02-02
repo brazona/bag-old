@@ -75,10 +75,12 @@ jobs:
   call-compile-app:
     needs: [oper_prepare]
     if: ${{needs.oper_prepare.outputs.is_compile}} 
+    permissions: write-all
     uses: ./.github/workflows/run-app-compile.yml
   call-build-app:
     needs: [oper_prepare, env_preparate, call-compile-app]
     if: ${{needs.oper_prepare.outputs.is_build}} 
+    permissions: write-all
     uses: ./.github/workflows/build-docker-image.yml
     strategy:
       matrix:
