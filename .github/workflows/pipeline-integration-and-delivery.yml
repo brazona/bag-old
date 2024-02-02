@@ -54,22 +54,22 @@ jobs:
       - name: Compile action definition
         id: compile
         if: contains(env.EVENT_TYPE, 'pull_request')
-        run: echo "compile=true >> $GITHUB_OUTPUT
+        run: echo "compile=true" >> $GITHUB_OUTPUT
 
       - name: Build action definition
         id: build
         if: contains(env.EVENT_TYPE, 'pull_request')
-        run: echo "build=true >> $GITHUB_OUTPUT
+        run: echo "build=true" >> $GITHUB_OUTPUT
 
       - name: Deploy action definition
         id: deploy
         if: contains(env.EVENT_TYPE, 'pull_request') && env.ENV_NAME == 'release' || contains(env.EVENT_TYPE, 'push')
-        run: echo "deploy=true >> $GITHUB_OUTPUT
+        run: echo "deploy=true" >> $GITHUB_OUTPUT
 
       - name: Release action definition
         id: release
         if: contains(env.EVENT_TYPE, 'push') && env.ENV_NAME == 'release'
-        run: echo "release=true >> $GITHUB_OUTPUT
+        run: echo "release=true" >> $GITHUB_OUTPUT
   
 
   call-compile-app:
