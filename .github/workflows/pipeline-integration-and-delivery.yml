@@ -13,6 +13,11 @@ on:
     paths-ignore:
       - 'app/resources/**'
   workflow_dispatch:
+env:
+  is_compile: false
+  is_build: false
+  is_deploy: false
+  is_release: false
 jobs:
   env_preparate:
     name: Identifying the Environment
@@ -50,40 +55,55 @@ jobs:
       EVENT_TYPE: ${{ github.event_name }} 
       ENV_NAME: ${{needs.env_preparate.outputs.env_name}} 
     outputs:
-      is_compile: ${{ steps.compile.outputs.compile || false }}
-      is_build: ${{ steps.build.outputs.build || false }}
-      is_deploy: ${{ steps.deploy.outputs.deploy || false}}
-      is_release: ${{ steps.release.outputs.release || false}}
+      is_compile: ${{ steps.compile.outputs.compile}}
+      is_build: ${{ steps.build.outputs.build}}
+      is_deploy: ${{ steps.deploy.outputs.deploy}}
+      is_release: ${{ steps.release.outputs.release}}
     steps:
       - name: Compile action definition
         id: compile
-        if: contains(env.EVENT_TYPE, 'pull_request')
+        if: contains(env.EVENT_TYPE, 'A')
         run: echo "compile=true" >> $GITHUB_OUTPUT
 
       - name: Build action definition
         id: build
-        if: contains(env.EVENT_TYPE, 'pull_request')
+        if: contains(env.EVENT_TYPE, 'A')
         run: echo "build=true" >> $GITHUB_OUTPUT
 
       - name: Deploy action definition
         id: deploy
-        if: contains(env.EVENT_TYPE, 'pull_request') && env.ENV_NAME == 'release' || contains(env.EVENT_TYPE, 'push')
+        if: contains(env.EVENT_TYPE, 'PR') && env.ENV_NAME == 'release' || contains(env.EVENT_TYPE, 'A')
         run: echo "deploy=true" >> $GITHUB_OUTPUT
 
       - name: Release action definition
         id: release
-        if: contains(env.EVENT_TYPE, 'push') && env.ENV_NAME == 'release'
+        if: contains(env.EVENT_TYPE, 'A') && env.ENV_NAME == 'release'
         run: echo "release=true" >> $GITHUB_OUTPUT
   
-
+  run_teste:
+    name: Run teste
+    runs-on: ubuntu-latest
+    permissions: write-all
+    needs: [oper_prepare, env_preparate]
+    steps:
+      - name: Env Name
+        run: echo ${{needs.env_preparate.outputs.env_name}}
+      - name: Is Compile
+        run: echo ${{needs.oper_prepare.outputs.is_compile}}
+      - name: Is Build
+        run: echo ${{needs.oper_prepare.outputs.is_build}}
+      - name: Is Deploy
+        run: echo ${{needs.oper_prepare.outputs.is_deploy}}
+      - name: Is Release
+        run: echo ${{needs.oper_prepare.outputs.is_release}}
   call-compile-app:
-    needs: [oper_prepare]
-    if: ${{needs.oper_prepare.outputs.is_compile}} 
+    needs: [oper_prepare, env_preparate, run_teste]
+    if: ${{needs.oper_prepare.outputs.is_compile == true}}
     permissions: write-all
     uses: ./.github/workflows/run-app-compile.yml
   call-build-app:
     needs: [oper_prepare, env_preparate, call-compile-app]
-    if: ${{needs.oper_prepare.outputs.is_build}} 
+    if: ${{needs.oper_prepare.outputs.is_build == true }} 
     permissions: write-all
     uses: ./.github/workflows/build-docker-image.yml
     strategy:
@@ -99,12 +119,12 @@ jobs:
 
   call-deploy-app:
     needs: [oper_prepare, call-build-app]
-    if: ${{needs.oper_prepare.outputs.is_deploy}} 
+    if: ${{needs.oper_prepare.outputs.is_deploy == true }} 
     permissions: write-all
     uses: ./.github/workflows/deploy.yml
   call-release:
     needs: [oper_prepare, call-deploy-app]
-    if: ${{needs.oper_prepare.outputs.is_release}} 
+    if: ${{needs.oper_prepare.outputs.is_release == true }} 
     permissions: write-all
     uses: ./.github/workflows/create-release.yml
 
