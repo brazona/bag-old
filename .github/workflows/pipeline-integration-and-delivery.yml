@@ -38,7 +38,7 @@ jobs:
         run: echo "ENV_NAME=development" >> $GITHUB_OUTPUT
       - name: Defined Environment
         id: env_name
-        run: echo "env_name=${{env.ENV_NAME}}" >> $GITHUB_OUTPUT
+        run: echo "env_name=ENV_NAME" >> $GITHUB_OUTPUT
         
   oper_prepare:
     name: Preparete Operation 
@@ -93,12 +93,12 @@ jobs:
         run: echo ${{needs.oper_prepare.outputs.is_release}}
   call-compile-app:
     needs: [oper_prepare, env_preparate, run_teste]
-    if: ${{needs.oper_prepare.outputs.is_compile == true}}
+    if: ${{needs.oper_prepare.outputs.is_compile}}
     permissions: write-all
     uses: ./.github/workflows/run-app-compile.yml
   call-build-app:
     needs: [oper_prepare, env_preparate, call-compile-app]
-    if: ${{needs.oper_prepare.outputs.is_build == true }} 
+    if: ${{needs.oper_prepare.outputs.is_build}} 
     permissions: write-all
     uses: ./.github/workflows/build-docker-image.yml
     strategy:
@@ -114,12 +114,12 @@ jobs:
 
   call-deploy-app:
     needs: [oper_prepare, call-build-app]
-    if: ${{needs.oper_prepare.outputs.is_deploy == true }} 
+    if: ${{needs.oper_prepare.outputs.is_deploy}} 
     permissions: write-all
     uses: ./.github/workflows/deploy.yml
   call-release:
     needs: [oper_prepare, call-deploy-app]
-    if: ${{needs.oper_prepare.outputs.is_release == true }} 
+    if: ${{needs.oper_prepare.outputs.is_release}} 
     permissions: write-all
     uses: ./.github/workflows/create-release.yml
 
