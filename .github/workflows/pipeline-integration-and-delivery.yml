@@ -75,11 +75,11 @@ jobs:
   call-compile-app:
     needs: [oper_prepare]
     if: ${{needs.oper_prepare.outputs.is_compile}} 
-    uses: ./.github/workflows/reusable/run-app-compile.yml
+    uses: ./.github/workflows/run-app-compile.yml
   call-build-app:
     needs: [oper_prepare, env_preparate, call-compile-app]
     if: ${{needs.oper_prepare.outputs.is_build}} 
-    uses: ./.github/workflows/reusable/build-docker-image.yml
+    uses: ./.github/workflows/build-docker-image.yml
     strategy:
       matrix:
         images: [app-ui]
@@ -92,11 +92,11 @@ jobs:
   call-deploy-app:
     needs: [oper_prepare, call-build-app]
     if: ${{needs.oper_prepare.outputs.is_deploy}} 
-    uses: ./.github/workflows/reusable/deploy.yml
+    uses: ./.github/workflows/deploy.yml
   call-release:
     needs: [oper_prepare, call-deploy-app]
     if: ${{needs.oper_prepare.outputs.is_release}} 
-    uses: ./.github/workflows/reusable/create-release.yml
+    uses: ./.github/workflows/create-release.yml
 
 
 

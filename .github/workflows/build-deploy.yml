@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - 'main'
-      - 'releases/**'
+      - 'release/**'
       - 'develop'
     paths-ignore:
       - 'app/resources/**'
@@ -17,14 +17,14 @@ env:
        github.ref_name == 'main' && ''
     || github.ref_name == 'develop'    && 'SNAPSHOT'
     || github.ref_name == 'release'    && 'RELEASE'
-    ||                                'snapshot'
     }}
   ENVIRONMENT: |-
     ${{
        github.ref_name == 'main'       && 'production'
+    || github.ref_name == 'main'       && 'staging'
+    || github.ref_name == 'release'    && 'homologation'
     || github.ref_name == 'develop'    && 'development'
-    || github.ref_name == 'release'    && 'staging'
-    ||                                'development'
+
     }}
 jobs:
   pre-build:
