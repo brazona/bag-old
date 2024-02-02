@@ -1,0 +1,52 @@
+name: Build Docker Image
+on:
+  workflow_call:
+    inputs:
+      env_name:
+        required: true
+        type: string
+      build_number_org:
+        required: true
+        type: string
+      image_name:
+        required: true
+        type: string
+      path_dockerfile:
+        required: true
+        type: string
+env:
+  REGISTRY: ghcr.io
+  ENVIRONMENT_NAME: ${{ inputs.env_name }}
+  APP_NAME: ${{ inputs.image_name }}
+  DOCKER_FILE_PATH: ${{ inputs.path_dockerfile }}
+  BUILD_NUMBER: ${{ inputs.build_number_org }}
+jobs:
+  build:
+    name: Build and Push Docker image 
+    runs-on: ubuntu-latest
+    permissions: write-all
+    environment:
+      name: ${{env.ENVIRONMENT_NAME}}
+    strategy:
+      matrix:
+        name_app: ${{env.APP_NAME}}
+        path_docker_file: ${{env.DOCKER_FILE_PATH}}
+    steps:
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker Build and Push Image
+        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        env:
+          NAME: ${{ matrix.name_app}}
+          PATH: ${{ matrix.path_docker_file}}
+        with:
+          context: ${{ env.PATH }}
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.NAME }}:${{env.BUILD_NUMBER}}
+
+      

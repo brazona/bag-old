@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.brazona</groupId>
 	<artifactId>bag</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>Business Administration Games - BAG </name>
 	<description>O aplicativo Business Administration Games ( BAG ), é um software capaz de simular relações de trabalho do ambiente corporativo com ênfase nos conceitos da Administração.O conteúdo tem carater educacional e oferece aos usuários a experiência de exercer funções ligadas a administração.</description>
 	<packaging>pom</packaging>
