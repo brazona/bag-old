@@ -19,9 +19,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BRANCH_NAME: ${{ github.ref_name }}
+      EVENT_TYPE: ${{ github.event_name }} 
     outputs:
       env_name: ${{ steps.env_name.outputs.env_name }}
     steps:
+      - name: Verify type Event
+        if: contains(env.EVENT_TYPE, 'pull_request')
+        run: echo "BRANCH_NAME=${{ github.base_ref }} " >> $GITHUB_ENV
       - name: Environment Production
         if: contains(${{ env.BRANCH_NAME }}, 'main')
         run: echo "defined_environment=production" >> $GITHUB_OUTPUT
