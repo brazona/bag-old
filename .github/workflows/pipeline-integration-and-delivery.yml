@@ -87,14 +87,24 @@ jobs:
     permissions: write-all
     uses: ./.github/workflows/build-docker-image.yml
     strategy:
+      max-parallel: 2
       matrix:
-        images: [app-ui]
-        paths: [./app-ui]
+        #images: [app-ui, app-api]
+        #paths: [./app-ui, ./app-api]
+        include:
+          - image: "app-ui"
+            path: "./app-ui"
+            
+          - image: "app-api"
+            path: "./app-api"
     with:
       env_name: ${{ needs.env_preparate.outputs.env_name }}
       build_number_org: ${{github.run_number}}-SNAPSHOT
-      image_name: ${{ matrix.images }}
-      path_dockerfile: ${{ matrix.paths }}
+      #image_name: ${{ matrix.images }}
+      #path_dockerfile: ${{ matrix.paths }}
+      image_name: ${{ matrix.image }}
+      path_dockerfile: ${{ matrix.path }}
+
   call-deploy-app:
     needs: [oper_prepare, call-build-app]
     if: ${{needs.oper_prepare.outputs.is_deploy}} 
