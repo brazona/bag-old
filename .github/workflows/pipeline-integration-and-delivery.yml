@@ -20,9 +20,9 @@ jobs:
     env:
       BRANCH_NAME: ${{ github.ref_name }}
       EVENT_TYPE: ${{ github.event_name }} 
-      ENV_NAME: 
+      ENV_NAME: ${{ github.event_name }}
     outputs:
-      env_name: ${{ steps.env_name.outputs.env_name }}
+      environment_name: ${{ steps.name.outputs.environment_name }}
     steps:
       - name: Verify type Event
         if: contains(env.EVENT_TYPE, 'pull_request')
@@ -37,8 +37,10 @@ jobs:
         if: contains(env.BRANCH_NAME, 'develop')
         run: echo "ENV_NAME=development" >> $GITHUB_ENV
       - name: Defined Environment
-        id: env_name
-        run: echo "env_name=ENV_NAME" >> $GITHUB_OUTPUT
+        id: name
+        #run: echo "environment_name=ENV_NAME" >> $GITHUB_OUTPUT
+        run: echo "environment_name=${{ env.ENV_NAME }}" >> $GITHUB_OUTPUT
+        
         
   oper_prepare:
     name: Preparete Operation 
@@ -46,10 +48,10 @@ jobs:
     permissions: write-all
     needs: [env_preparate]
     environment:
-      name: ${{needs.env_preparate.outputs.env_name}} 
+      name: ${{needs.env_preparate.outputs.environment_name}} 
     env:
       EVENT_TYPE: ${{ github.event_name }} 
-      ENV_NAME: ${{needs.env_preparate.outputs.env_name}} 
+      ENV_NAME: ${{needs.env_preparate.outputs.environment_name}} 
     outputs:
       is_compile: ${{ steps.compile.outputs.compile}}
       is_build: ${{ steps.build.outputs.build}}
@@ -82,7 +84,7 @@ jobs:
     needs: [oper_prepare, env_preparate]
     steps:
       - name: Env Name
-        run: echo ${{needs.env_preparate.outputs.env_name}}
+        run: echo ${{needs.env_preparate.outputs.environment_name}}
       - name: Is Compile
         run: echo ${{needs.oper_prepare.outputs.is_compile}}
       - name: Is Build
@@ -108,7 +110,7 @@ jobs:
           - image: "app-ui"
           #- image: "app-api"
     with:
-      env_name: ${{ needs.env_preparate.outputs.env_name }}
+      env_name: ${{ needs.env_preparate.outputs.environment_name }}
       build_number_org: ${{github.run_number}}-SNAPSHOT
       app_dir: ${{ matrix.image }}
 
