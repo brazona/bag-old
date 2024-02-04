@@ -102,7 +102,7 @@ jobs:
     needs: [oper_prepare, env_preparate, call-compile-app]
     if: ${{needs.oper_prepare.outputs.is_build}} 
     permissions: write-all
-    uses: ./.github/workflows/shared/build-docker-image.yml
+    uses: ./.github/workflows/build-docker-image.yml
     strategy:
       max-parallel: 2
       matrix:
@@ -118,7 +118,7 @@ jobs:
     needs: [oper_prepare, call-build-app, env_preparate]
     if: ${{needs.oper_prepare.outputs.is_deploy}} 
     permissions: write-all
-    uses: ./.github/workflows/shared/deploy.yml
+    uses: ./.github/workflows/deploy.yml
     strategy:
       max-parallel: 2
       matrix:
@@ -133,7 +133,7 @@ jobs:
     needs: [oper_prepare, call-deploy-app]
     if: ${{needs.oper_prepare.outputs.is_release}} 
     permissions: write-all
-    uses: ./.github/workflows/shared/create-release.yml
+    uses: ./.github/workflows/create-release.yml
 
 
 
