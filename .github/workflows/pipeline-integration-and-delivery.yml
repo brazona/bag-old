@@ -97,7 +97,7 @@ jobs:
     needs: [oper_prepare, env_preparate, run_teste]
     if: ${{needs.oper_prepare.outputs.is_compile}}
     permissions: write-all
-    uses: ./.github/workflows/shared/run-app-compile.yml
+    uses: ./.github/workflows/run-app-compile.yml
   call-build-app:
     needs: [oper_prepare, env_preparate, call-compile-app]
     if: ${{needs.oper_prepare.outputs.is_build}} 
