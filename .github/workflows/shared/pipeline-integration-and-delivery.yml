@@ -97,12 +97,12 @@ jobs:
     needs: [oper_prepare, env_preparate, run_teste]
     if: ${{needs.oper_prepare.outputs.is_compile}}
     permissions: write-all
-    uses: ./.github/workflows/run-app-compile.yml
+    uses: ./.github/workflows/shared/run-app-compile.yml
   call-build-app:
     needs: [oper_prepare, env_preparate, call-compile-app]
     if: ${{needs.oper_prepare.outputs.is_build}} 
     permissions: write-all
-    uses: ./.github/workflows/build-docker-image.yml
+    uses: ./.github/workflows/shared/build-docker-image.yml
     strategy:
       max-parallel: 2
       matrix:
@@ -115,15 +115,25 @@ jobs:
       app_dir: ${{ matrix.image }}
 
   call-deploy-app:
-    needs: [oper_prepare, call-build-app]
+    needs: [oper_prepare, call-build-app, env_preparate]
     if: ${{needs.oper_prepare.outputs.is_deploy}} 
     permissions: write-all
-    uses: ./.github/workflows/deploy.yml
+    uses: ./.github/workflows/shared/deploy.yml
+    strategy:
+      max-parallel: 2
+      matrix:
+        include:
+          - image: "app-ui"
+          #- image: "app-api"
+    with:
+      env_name: ${{ needs.env_preparate.outputs.environment_name }}
+      build_number_org: ${{github.run_number}}-SNAPSHOT
+      app_dir: ${{ matrix.image }}
   call-release:
     needs: [oper_prepare, call-deploy-app]
     if: ${{needs.oper_prepare.outputs.is_release}} 
     permissions: write-all
-    uses: ./.github/workflows/create-release.yml
+    uses: ./.github/workflows/shared/create-release.yml
 
 
 
