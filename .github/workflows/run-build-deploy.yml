@@ -134,7 +134,7 @@ jobs:
         env:
           APP: ${{ matrix.application }}
           TAG_IMAGE: ${{needs.info-environment.outputs.tag}}
-          NAMESPACE: ${{needs.info-environment.outputs.tag}}
+          NAMESPACE: ${{needs.info-environment.outputs.environment_name}}
           DNS: ${{ vars.DNS }}
         run: | 
           manifest=`cat "./${{ env.APP }}/deployment.yaml" | sed 's/$NAMESPACE/${{ env.NAMESPACE }}/ ; s/$DNS/${{ env.DNS }}/ ; s/$TAG/${{ env.TAG_IMAGE}}/ ; s/$APP_VERSION/${{ env.TAG_IMAGE}}/ ; s/$APP_ENVIRONMENT/${{ env.NAMESPACE}}/' ./${{ env.APP}}/deployment.yaml`
