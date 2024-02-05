@@ -6,7 +6,8 @@ on:
       - 'releases/**'
       - 'develop'
     paths-ignore:
-      - 'app/resources/**'
+      - '.resources/**'
+      - '.github/workflows/run-merge-branch.yml'
   workflow_dispatch:
 env:
   BRANCH_TARGET: ${{ github.ref_name }}
