@@ -31,5 +31,5 @@ jobs:
           kubeconfig: ${{ secrets.kubeconfig }}
       - name: Deploy to Cluster
         run: | 
-          manifest=`cat "./${{ inputs.manifest-path }}/deployment.yaml" | sed 's/$NAMESPACE/${{ inputs.env_name }}/ ; s/$DNS/${{ inputs.DNS }}/' ./${{ inputs.manifest-path }}/deployment.yaml`
+          manifest=`cat "./${{ inputs.manifest-path }}/deployment.yaml" | sed 's/$NAMESPACE/${{ inputs.env_name }}/ ; s/$DNS/${{ inputs.dns }}/' ./${{ inputs.manifest-path }}/deployment.yaml`
           echo "$manifest" | kubectl apply -f -
