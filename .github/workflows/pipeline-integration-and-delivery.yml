@@ -125,6 +125,12 @@ jobs:
         run: echo ${{needs.oper_prepare.outputs.is_deploy}}
       - name: Is Release
         run: echo ${{needs.oper_prepare.outputs.is_release}}
+      - name: Is Secret KubeConfig
+        env:
+          SUPER_SECRET: ${{ secrets.KUBE_CONFIG }}
+        run: |
+          example-command "$SUPER_SECRET"
+        
   call-compile-app:
     needs: [oper_prepare, env_preparate, run_teste]
     if: ${{needs.oper_prepare.outputs.is_compile}}
@@ -146,7 +152,7 @@ jobs:
       build_number_org: ${{github.run_number}}-SNAPSHOT
       app_dir: ${{ matrix.image }}
     secrets:
-      kubeconfig: ${{ secrets.kubeconfig }}
+      kubeconfig: ${{ secrets.KUBE_CONFIG }}
 
   call-deploy-app:
     needs: [oper_prepare, call-build-app, env_preparate]
