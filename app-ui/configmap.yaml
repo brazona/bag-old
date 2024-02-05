@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: configmap-app-ui
-  namespace: $NAMESPACE
-data:
-  image-docker: $LAST_BUILD_IMAGE
-  app-version: $APP_VERSION
-  app-environment: $APP_ENVIRONMENT

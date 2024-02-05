@@ -1,0 +1,117 @@
+name: Run Release Version
+on:
+  pull_request:
+    branches:
+      - 'main'
+    paths-ignore:
+      - 'app/resources/**'
+  workflow_dispatch:
+jobs:
+  compile:
+    name: Run Maven Project
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+          
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Build with Maven
+        #run: mvn -f ./app/app-api/ clean install
+        run: mvn clean install test
+  pre-build:
+    name: Prepare Metadata Pipeline
+    runs-on: ubuntu-latest
+    outputs:
+      build_nr: ${{ steps.build_id.outputs.build_nr }}
+      env_name: ${{ steps.env_id.outputs.env_name }}
+      is_build: ${{ steps.is_build.outputs.is_build }}
+    steps:
+      - name: Extracts value Build Id
+        id: build_id
+        run: echo "build_nr=${{github.run_number}}-$IMAGE_TYPE" >> $GITHUB_OUTPUT
+      - name: Extracts value Environment
+        id: env_id
+        run: echo "env_name=$ENVIRONMENT" >> $GITHUB_OUTPUT
+      - name: Extracts value Is Build?
+        id: is_build
+        run: echo "is_build=$ISBUILD" >> $GITHUB_OUTPUT
+  build:
+    name: Build and Push Docker image 
+    if: ${{needs.pre-build.outputs.is_build}}
+    runs-on: ubuntu-latest
+    permissions: write-all
+    environment:
+      name: ${{needs.pre-build.outputs.env_name}}
+    needs: [pre-build]
+    outputs:
+      image_docker: ${{ steps.image.outputs.image_docker }}
+    steps:
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+          
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Build with Maven
+        run: mvn clean install
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build Docker Image
+        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        env:
+          MICROSERVICES_NAME: app-ui
+        with:
+          context: ./${{ env.MICROSERVICES_NAME }}
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.MICROSERVICES_NAME }}:${{needs.pre-build.outputs.build_nr}}
+      - name: Extracts value Image Docker
+        id: image
+        run: echo "image_docker=${{needs.pre-build.outputs.build_nr}}" >> $GITHUB_OUTPUT
+  deploy:
+    name: Deploy Kubernetes
+    runs-on: ubuntu-latest
+    permissions: write-all
+    environment:
+      name: ${{needs.pre-build.outputs.env_name}}
+    needs: [build, pre-build]
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Set Kubernetes Context
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+      - name: Deploy to Cluster
+        run: | 
+          manifest=`cat "./app-ui/deployment.yaml" | sed 's/$NAMESPACE/${{ vars.NAMESPACE }}/ ; s/$DNS/${{ vars.DNS }}/ ; s/$TAG/${{needs.build.outputs.image_docker}}/ ; s/$APP_VERSION/${{needs.build.outputs.image_docker}}/ ; s/$APP_ENVIRONMENT/${{needs.pre-build.outputs.env_name}}/' ./app-ui/deployment.yaml`
+          echo "$manifest" | kubectl apply -f -
+

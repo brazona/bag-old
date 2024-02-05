@@ -73,7 +73,7 @@ metadata:
     allow.http: "true"
 spec:
   rules:
-    - host: $DNS
+    - host: bag.$DNS
       http:
         paths:
           - path: /
