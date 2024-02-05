@@ -145,6 +145,8 @@ jobs:
       env_name: ${{ needs.env_preparate.outputs.environment_name }}
       build_number_org: ${{github.run_number}}-SNAPSHOT
       app_dir: ${{ matrix.image }}
+    secrets:
+      kubeconfig: ${{ secrets.kubeconfig }}
 
   call-deploy-app:
     needs: [oper_prepare, call-build-app, env_preparate]
