@@ -25,26 +25,15 @@ spec:
         - name: pipeline-docker-registry
       containers:
       - name: app-ui
-        #image: ghcr.io/brazona/business-administration-games/app-ui:$TAG
-        image:
-          valueFrom:
-            configMapKeyRef:
-              name: configmap-app-ui
-              key: image-docker
+        image: ghcr.io/brazona/business-administration-games/app-ui:$TAG
         ports:
         - containerPort: 80
           protocol: TCP
         env:
-        - name: APP_VERSION
-          valueFrom:
-            configMapKeyRef:
-              name: configmap-app-ui
-              key: app-version
-        - name: APP_ENVIRONMENT
-          valueFrom:
-            configMapKeyRef:
-              name: configmap-app-ui
-              key: app-environment
+        - name: "APP_VERSION"
+          value: $APP_VERSION
+        - name: "APP_ENVIRONMENT"
+          value: $APP_ENVIRONMENT
       securityContext:
         runAsUser: 0
       terminationGracePeriodSeconds: 30
