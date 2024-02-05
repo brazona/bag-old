@@ -114,6 +114,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     needs: [oper_prepare, env_preparate]
+    environment:
+      name: ${{needs.env_preparate.outputs.environment_name}} 
     steps:
       - name: Env Name
         run: echo ${{needs.env_preparate.outputs.environment_name}}
@@ -166,8 +168,10 @@ jobs:
           #- image: "app-api"
     with:
       env_name: ${{ needs.env_preparate.outputs.environment_name }}
-      dns: ${{github.run_number}}-SNAPSHOT
+      dns: ${{ vars.DNS }}
       manifest-path: ${{ matrix.manifest-path }}
+    secrets:
+      kubeconfig: ${{ secrets.KUBE_CONFIG }}
   call-release:
     needs: [oper_prepare, call-deploy-app]
     if: ${{needs.oper_prepare.outputs.is_release}} 

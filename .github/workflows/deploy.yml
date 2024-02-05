@@ -1,6 +1,9 @@
 name: Deploy Application in Kube
 on:
   workflow_call:
+    secrets:
+      kubeconfig:
+        required: true
     inputs:
       env_name:
         required: true
@@ -25,7 +28,7 @@ jobs:
         uses: azure/k8s-set-context@v1
         with:
           method: kubeconfig
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+          kubeconfig: ${{ secrets.kubeconfig }}
       - name: Deploy to Cluster
         run: | 
           manifest=`cat "./${{ inputs.manifest-path }}/deployment.yaml" | sed 's/$NAMESPACE/${{ inputs.env_name }}/ ; s/$DNS/${{ inputs.DNS }}/' ./${{ inputs.manifest-path }}/deployment.yaml`
