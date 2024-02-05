@@ -35,12 +35,12 @@ spec:
         - containerPort: 80
           protocol: TCP
         env:
-        - name: "APP_VERSION"
+        - name: APP_VERSION
           valueFrom:
             configMapKeyRef:
               name: configmap-app-ui
               key: app-version
-        - name: "APP_ENVIRONMENT"
+        - name: APP_ENVIRONMENT
           valueFrom:
             configMapKeyRef:
               name: configmap-app-ui

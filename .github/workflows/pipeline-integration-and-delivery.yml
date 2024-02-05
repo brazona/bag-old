@@ -125,6 +125,8 @@ jobs:
         run: echo ${{needs.oper_prepare.outputs.is_deploy}}
       - name: Is Release
         run: echo ${{needs.oper_prepare.outputs.is_release}}
+      - name: Is Var
+        run: echo ${{needs.oper_prepare.outputs.is_release}}
         
   call-compile-app:
     needs: [oper_prepare, env_preparate, run_teste]
@@ -148,7 +150,7 @@ jobs:
       app_dir: ${{ matrix.image }}
     secrets:
       kubeconfig: ${{ secrets.KUBE_CONFIG }}
-
+  
   call-deploy-app:
     needs: [oper_prepare, call-build-app, env_preparate]
     if: ${{needs.oper_prepare.outputs.is_deploy}} 
@@ -162,7 +164,7 @@ jobs:
           #- image: "app-api"
     with:
       env_name: ${{ needs.env_preparate.outputs.environment_name }}
-      dns: ${{ vars.DNS }}
+      dns: ${{ needs.env_preparate.outputs.environment_name }}
       manifest-path: ${{ matrix.manifest-path }}
     secrets:
       kubeconfig: ${{ secrets.KUBE_CONFIG }}
