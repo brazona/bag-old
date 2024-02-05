@@ -128,8 +128,7 @@ jobs:
       - name: Is Secret KubeConfig
         env:
           SUPER_SECRET: ${{ secrets.KUBE_CONFIG }}
-        run: |
-          example-command "$SUPER_SECRET"
+        run: echo ${{env.SUPER_SECRET}}
         
   call-compile-app:
     needs: [oper_prepare, env_preparate, run_teste]
