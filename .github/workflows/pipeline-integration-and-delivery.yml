@@ -114,8 +114,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     needs: [oper_prepare, env_preparate]
-    environment:
-      name: ${{needs.env_preparate.outputs.environment_name}} 
     steps:
       - name: Env Name
         run: echo ${{needs.env_preparate.outputs.environment_name}}
@@ -127,10 +125,6 @@ jobs:
         run: echo ${{needs.oper_prepare.outputs.is_deploy}}
       - name: Is Release
         run: echo ${{needs.oper_prepare.outputs.is_release}}
-      - name: Is Secret KubeConfig
-        env:
-          SUPER_SECRET: ${{ secrets.KUBE_CONFIG }}
-        run: echo ${{env.SUPER_SECRET}}
         
   call-compile-app:
     needs: [oper_prepare, env_preparate, run_teste]
