@@ -7,6 +7,8 @@
 
 <p align="justify"> O aplicativo Business Administration Games ( BAG ), é um software capaz de simular relações de trabalho do ambiente corporativo com ênfase nos conceitos da Administração.O conteúdo tem carater educacional e oferece aos usuários a experiência de exercer funções ligadas a administração. </p>
 
+
+
 <img src="https://img.shields.io/static/v1?label=spring&message=framework&color=blue&style=for-the-badge&logo=spring"/>
 
 ## **Autor**
