@@ -1,19 +1,18 @@
 name: Run Delete Branch Feature/Release 
 on:
-  push:
-    branches:
-      - 'main'
-      - 'release/**'
-    paths-ignore:
-      - '.resources/**'
-  workflow_dispatch:
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
 jobs:
   delete-branch:
     runs-on: ubuntu-latest
     steps:
       - name: Delete branch
-        if: startsWith(${{ github.ref_name }} , 'release') || startsWith(${{ github.ref_name }} , 'feature')
         uses: dawidd6/action-delete-branch@v3
         with:
           github_token: ${{github.token}}
-          branches: ${{ github.ref_name }} 
+          branches: ${{ inputs.branch }} 
+
+
