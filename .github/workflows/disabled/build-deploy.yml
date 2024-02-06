@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - 'main'
-      - 'releases/**'
+      - 'release/**'
       - 'develop'
     paths-ignore:
       - 'app/resources/**'
@@ -17,14 +17,14 @@ env:
        github.ref_name == 'main' && ''
     || github.ref_name == 'develop'    && 'SNAPSHOT'
     || github.ref_name == 'release'    && 'RELEASE'
-    ||                                'snapshot'
     }}
   ENVIRONMENT: |-
     ${{
        github.ref_name == 'main'       && 'production'
+    || github.ref_name == 'main'       && 'staging'
+    || github.ref_name == 'release'    && 'homologation'
     || github.ref_name == 'develop'    && 'development'
-    || github.ref_name == 'release'    && 'staging'
-    ||                                'development'
+
     }}
 jobs:
   pre-build:
@@ -52,6 +52,8 @@ jobs:
     environment:
       name: ${{needs.pre-build.outputs.env_name}}
     needs: [pre-build]
+    outputs:
+      image_docker: ${{ steps.image.outputs.image_docker }}
     steps:
       - name: Cache Maven packages
         uses: actions/cache@v1
@@ -78,15 +80,35 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Business Administration Games
+      - name: Build Docker Image
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         env:
           MICROSERVICES_NAME: app-ui
         with:
           context: ./${{ env.MICROSERVICES_NAME }}
-
           push: true
           tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.MICROSERVICES_NAME }}:${{needs.pre-build.outputs.build_nr}}
-
+      - name: Extracts value Image Docker
+        id: image
+        run: echo "image_docker=${{needs.pre-build.outputs.build_nr}}" >> $GITHUB_OUTPUT
       
+  deploy:
+    name: Deploy Kubernetes
+    runs-on: ubuntu-latest
+    permissions: write-all
+    environment:
+      name: ${{needs.pre-build.outputs.env_name}}
+    needs: [build, pre-build]
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Set Kubernetes Context
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+      - name: Deploy to Cluster
+        run: | 
+          manifest=`cat "./app-ui/deployment.yaml" | sed 's/$NAMESPACE/${{ vars.NAMESPACE }}/ ; s/$DNS/${{ vars.DNS }}/ ; s/$TAG/${{needs.build.outputs.image_docker}}/ ; s/$APP_VERSION/${{needs.build.outputs.image_docker}}/ ; s/$APP_ENVIRONMENT/${{needs.pre-build.outputs.env_name}}/' ./app-ui/deployment.yaml`
+          echo "$manifest" | kubectl apply -f -
+

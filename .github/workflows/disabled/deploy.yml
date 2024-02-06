@@ -1,0 +1,35 @@
+name: Deploy Application in Kube
+on:
+  workflow_call:
+    secrets:
+      kubeconfig:
+        required: true
+    inputs:
+      env_name:
+        required: true
+        type: string
+      dns:
+        required: true
+        type: string
+      manifest-path:
+        required: true
+        type: string
+jobs:         
+  deploy:
+    name: Deploy Kubernetes
+    runs-on: ubuntu-latest
+    permissions: write-all
+    environment:
+      name: ${{inputs.env_name}}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Set Kubernetes Context
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.kubeconfig }}
+      - name: Deploy to Cluster
+        run: | 
+          manifest=`cat "./${{ inputs.manifest-path }}/deployment.yaml" | sed 's/$NAMESPACE/${{ inputs.env_name }}/ ; s/$DNS/${{ inputs.dns }}/' ./${{ inputs.manifest-path }}/deployment.yaml`
+          echo "$manifest" | kubectl apply -f -

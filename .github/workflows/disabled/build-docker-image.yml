@@ -1,0 +1,65 @@
+name: Build Docker Image
+on:
+  workflow_call:
+    secrets:
+      kubeconfig:
+        required: true
+    inputs:
+      env_name:
+        required: true
+        type: string
+      build_number_org:
+        required: true
+        type: string
+      app_dir:
+        required: true
+        type: string
+env:
+  REGISTRY: ghcr.io
+jobs:
+  build:
+    name: Build and Push Docker image 
+    runs-on: ubuntu-latest
+    permissions: write-all
+    environment:
+      name: ${{ inputs.env_name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Docker Build and Push Image
+        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        env:
+          APP_DIR: ${{ inputs.app_dir}}
+        with:
+          context: ./${{ env.APP_DIR }}
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.APP_DIR }}:${{ inputs.build_number_org }}
+  deploy:
+    name: Deploy Kubernetes
+    runs-on: ubuntu-latest
+    permissions: write-all
+    needs: [build]
+    environment:
+      name: ${{inputs.env_name}}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Set Kubernetes Context
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.kubeconfig }}
+      - name: Deploy to ConfigMap
+        run: | 
+          manifest=`cat "./${{ inputs.app_dir}}/configmap.yaml" | sed 's/$NAMESPACE/${{ inputs.env_name }}/ ; s/$LAST_BUILD_IMAGE/${{ inputs.build_number_org }}/ ; s/$APP_VERSION/${{ inputs.build_number_org }}/ ; s/$LAST_BUILD_IMAGE/${{ inputs.build_number_org }}/ ; s/$APP_ENVIRONMENT/${{ inputs.env_name }}/' ./${{ inputs.app_dir}}/configmap.yaml`
+          echo "$manifest" | kubectl apply -f -
+
+      

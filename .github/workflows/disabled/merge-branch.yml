@@ -1,0 +1,36 @@
+name: Merge Branch
+on:
+  workflow_call:
+    inputs:
+      branch_source:
+        required: true
+        type: string
+      branch_target:
+        required: true
+        type: string
+      env_name:
+        required: true
+        type: string
+
+jobs:
+  sync-branch:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    environment:
+      name: ${{inputs.env_name}}
+    steps:
+      - uses: actions/checkout@main
+      - name: Merge ${{inputs.branch_source}} -> ${{inputs.branch_target}}
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: ${{inputs.branch_source}}
+          target_branch: ${{inputs.branch_target}}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Merge ${{inputs.branch_source}} -> ${{inputs.branch_target}}
+        uses: everlytic/branch-merge@1.1.2
+        with:
+          github_token: ${{ github.token }}
+          source_ref: ${{inputs.branch_source}}
+          target_branch: ${{inputs.branch_target}}
+          commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
