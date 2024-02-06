@@ -5,7 +5,6 @@ on:
       branch:
         required: true
         type: string
-
 jobs:
   delete-branch:
     runs-on: ubuntu-latest
