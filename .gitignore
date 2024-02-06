@@ -80,5 +80,11 @@ Thumbs.db
 ## Implementar arquivo .env com o arquivo environment
 
 #/.resources/environments/***
+## Implementar arquivo .env com o arquivo environment
+
+#/.resources/environments/***
 .env
 #environment.ts
+app-ui/src/environments/environment.local.ts
+app-ui/src/environments/environment.prod.ts
+

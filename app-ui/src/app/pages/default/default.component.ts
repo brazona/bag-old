@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatButtonModule} from '@angular/material/button';
+import { environment } from '../../../environments/environment';
+
+
 
 @Component({
   selector: 'app-default',
@@ -10,5 +13,6 @@ import {MatButtonModule} from '@angular/material/button';
   imports: [MatGridListModule, MatButtonModule],
 })
 export class DefaultComponent {
-
+ version:string = environment.VERSION; 
+ environment:any = environment.ENVIRONMENT;
 }

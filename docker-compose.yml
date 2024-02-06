@@ -1,8 +1,18 @@
 version: '3.5'
 services:
   app-ui:
+    tty: true
     container_name: app-ui
-    build: ./app-ui/
+    build:
+      context: ./app-ui/
+      args:
+        VERSION: 2020
+        ENVIRONMENT: 'docker-compose-arg'
     ports:
       - "8282:80"
-    restart: unless-stopped
+    #restart: always
+    environment:
+      APP_VERSION: 1.01.10
+      APP_ENVIRONMENT: 'localhost-container'
+    
+      

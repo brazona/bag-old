@@ -1,9 +1,13 @@
 export const environment = {
-  production: false,
+  production: true,
+  //@ts-ignore
+  ENVIRONMENT: window["env"]["APP_ENVIRONMENT"],
+  //@ts-ignore
+  VERSION: window["env"]["APP_VERSION"],
   APP_API:{
-    URL:'http://localhost:8080/api',
-    AUTH_USER:'DEVELOP_WUhS4Z7brQ',
-    AUTH_PASS:'KM849FSR3I9FNC9OTBSR',
-    GRANT: 'password'
-  }
+    URL:'${APP_API_URL}',
+    AUTH_USER:'${SECURITY_OAUTH_CLIENT_NAME}',
+    AUTH_PASS:'${SECURITY_OAUTH_CLIENT_PASS}',
+    GRANT: '${APP_API_GRANT}'
+  },
 };
