@@ -1,0 +1,200 @@
+name: Pipeline Continuous Integration and Delivery
+on:
+  pull_request:
+    branches:
+      - 'main'
+      - 'release/**'
+      - 'develop'
+  push:
+    branches:
+      - 'main'
+      - 'release/**'
+    paths-ignore:
+      - 'app/resources/**'
+  workflow_dispatch:
+jobs:
+  env_preparate:
+    name: Identifying the Environment
+    runs-on: ubuntu-latest
+    env:
+      BRANCH_NAME: ${{ github.ref_name }}
+      BRANCH_NAME_SOURCE: ${{ github.ref_name }} 
+      EVENT_TYPE: ${{ github.event_name }} 
+      ENV_NAME: ${{ github.event_name }}
+    outputs:
+      environment_name: ${{ steps.name.outputs.environment_name }}
+      branch_source: ${{ steps.branch_source.outputs.branch_source }}
+      branch_target: ${{ steps.branch_target.outputs.branch_target }}
+    steps:
+      - name: Verify type Event Branch Target
+        if: contains(env.EVENT_TYPE, 'pull_request')
+        run: echo "BRANCH_NAME=${{ github.base_ref }} " >> $GITHUB_ENV
+      - name: Verify type Event Branch Source
+        if: contains(env.EVENT_TYPE, 'pull_request')
+        run: echo "BRANCH_NAME_SOURCE=${{ github.head_ref }} " >> $GITHUB_ENV
+      - name: Environment Production
+        if: contains(env.BRANCH_NAME, 'main') && contains(env.EVENT_TYPE, 'push')
+        run: echo "ENV_NAME=production" >> $GITHUB_ENV
+      - name: Environment Staging
+        if: contains(env.BRANCH_NAME, 'main') && contains(env.EVENT_TYPE, 'pull_request')
+        run: echo "ENV_NAME=staging" >> $GITHUB_ENV
+      - name: Environment Homologation
+        if: startsWith(env.BRANCH_NAME, 'release')
+        run: echo "ENV_NAME=homologation" >> $GITHUB_ENV
+      - name: Environment Development
+        if: contains(env.BRANCH_NAME, 'develop')
+        run: echo "ENV_NAME=development" >> $GITHUB_ENV
+      - name: Defined Environment
+        id: name
+        #run: echo "environment_name=ENV_NAME" >> $GITHUB_OUTPUT
+        run: echo "environment_name=${{ env.ENV_NAME }}" >> $GITHUB_OUTPUT
+      - name: Defined Branch Target
+        id: branch_target
+        run: echo "branch_target=${{ env.BRANCH_NAME }}" >> $GITHUB_OUTPUT
+      - name: Defined Branch Source
+        id: branch_source
+        run: echo "branch_source=${{ env.BRANCH_NAME_SOURCE }}" >> $GITHUB_OUTPUT
+        
+  oper_prepare:
+    name: Preparete Operation 
+    runs-on: ubuntu-latest
+    permissions: write-all
+    needs: [env_preparate]
+    environment:
+      name: ${{needs.env_preparate.outputs.environment_name}} 
+    env:
+      EVENT_TYPE: ${{ github.event_name }} 
+      ENV_NAME: ${{needs.env_preparate.outputs.environment_name}} 
+    outputs:
+      is_compile: ${{ steps.compile.outputs.compile}}
+      is_build: ${{ steps.build.outputs.build}}
+      is_deploy: ${{ steps.deploy.outputs.deploy}}
+      is_pre-release: ${{ steps.pre-release.outputs.pre-release}}
+      is_release: ${{ steps.release.outputs.release}}
+      is_merge: ${{ steps.merge.outputs.merge}}
+      is_delete: ${{ steps.delete.outputs.delete}}
+    steps:
+      - name: Compile action definition
+        id: compile
+        if: contains(env.EVENT_TYPE, 'pull_request')
+        run: echo "compile=true" >> $GITHUB_OUTPUT
+
+      - name: Build action definition
+        id: build
+        if: contains(env.EVENT_TYPE, 'pull_request')
+        run: echo "build=true" >> $GITHUB_OUTPUT
+
+      - name: Deploy action definition
+        id: deploy
+        if: contains(env.EVENT_TYPE, 'pull_request') && env.ENV_NAME == 'homologation' || env.ENV_NAME == 'development' 
+        run: echo "deploy=true" >> $GITHUB_OUTPUT
+
+      - name: Pré Release action definition
+        id: pre-release
+        if: contains(env.EVENT_TYPE, 'pull_request') && env.ENV_NAME == 'staging'
+        run: echo "pre-release=true" >> $GITHUB_OUTPUT
+
+      - name: Release action definition
+        id: release
+        if: contains(env.EVENT_TYPE, 'push') && env.ENV_NAME == 'production'
+        run: echo "release=true" >> $GITHUB_OUTPUT
+      
+      - name: Merge action definition
+        id: merge
+        if: contains(env.EVENT_TYPE, 'pull_request') && env.ENV_NAME == 'development' || contains(env.EVENT_TYPE, 'push') &&  env.ENV_NAME != 'development'
+        run: echo "merge=true" >> $GITHUB_OUTPUT
+
+      - name: Delete branch action definition
+        id: delete
+        if: contains(env.EVENT_TYPE, 'push') && env.ENV_NAME == 'homologation' || env.ENV_NAME == 'production'
+        run: echo "delete=true" >> $GITHUB_OUTPUT
+
+  run_teste:
+    name: Run teste
+    runs-on: ubuntu-latest
+    permissions: write-all
+    needs: [oper_prepare, env_preparate]
+    steps:
+      - name: Env Name
+        run: echo ${{needs.env_preparate.outputs.environment_name}}
+      - name: Is Compile
+        run: echo ${{needs.oper_prepare.outputs.is_compile}}
+      - name: Is Build
+        run: echo ${{needs.oper_prepare.outputs.is_build}}
+      - name: Is Deploy
+        run: echo ${{needs.oper_prepare.outputs.is_deploy}}
+      - name: Is Release
+        run: echo ${{needs.oper_prepare.outputs.is_release}}
+      - name: Is Var
+        run: echo ${{needs.oper_prepare.outputs.is_release}}
+        
+  call-compile-app:
+    needs: [oper_prepare, env_preparate, run_teste]
+    if: ${{needs.oper_prepare.outputs.is_compile}}
+    permissions: write-all
+    uses: ./.github/workflows/run-app-compile.yml
+  call-build-app:
+    needs: [oper_prepare, env_preparate, call-compile-app]
+    if: ${{needs.oper_prepare.outputs.is_build}} 
+    permissions: write-all
+    uses: ./.github/workflows/build-docker-image.yml
+    strategy:
+      max-parallel: 2
+      matrix:
+        include:
+          - image: "app-ui"
+          #- image: "app-api"
+    with:
+      env_name: ${{ needs.env_preparate.outputs.environment_name }}
+      build_number_org: ${{github.run_number}}-SNAPSHOT
+      app_dir: ${{ matrix.image }}
+    secrets:
+      kubeconfig: ${{ secrets.KUBE_CONFIG }}
+  
+  call-deploy-app:
+    needs: [oper_prepare, call-build-app, env_preparate]
+    if: ${{needs.oper_prepare.outputs.is_deploy}} 
+    permissions: write-all
+    uses: ./.github/workflows/deploy.yml
+    strategy:
+      max-parallel: 2
+      matrix:
+        include:
+          - manifest-path: "app-ui"
+          #- image: "app-api"
+    with:
+      env_name: ${{ needs.env_preparate.outputs.environment_name }}
+      dns: ${{ needs.env_preparate.outputs.environment_name }}
+      manifest-path: ${{ matrix.manifest-path }}
+    secrets:
+      kubeconfig: ${{ secrets.KUBE_CONFIG }}
+  call-release:
+    needs: [oper_prepare, call-deploy-app]
+    if: ${{needs.oper_prepare.outputs.is_release}} 
+    permissions: write-all
+    uses: ./.github/workflows/create-release.yml
+  call-pre-release:
+    needs: [oper_prepare, call-deploy-app]
+    if: ${{needs.oper_prepare.outputs.is_pre-release}} 
+    permissions: write-all
+    uses: ./.github/workflows/create-pre-release.yml
+  call-merge:
+    needs: [oper_prepare, call-deploy-app, env_preparate]
+    if: ${{needs.oper_prepare.outputs.is_merge}} 
+    permissions: write-all
+    uses: ./.github/workflows/merge-branch.yml
+    with:
+      env_name: ${{ needs.env_preparate.outputs.environment_name }}
+      branch_source: ${{ needs.env_preparate.outputs.branch_source }}
+      branch_target: ${{ needs.env_preparate.outputs.branch_target }}
+      
+  call-delete-branch:
+    needs: [oper_prepare, call-merge, env_preparate]
+    if: ${{needs.oper_prepare.outputs.is_release}} 
+    permissions: write-all
+    uses: ./.github/workflows/delete-branch.yml
+    with:
+      branch_source: ${{ needs.env_preparate.outputs.branch_source }}
+
+
+  

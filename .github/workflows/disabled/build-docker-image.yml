@@ -1,6 +1,9 @@
 name: Build Docker Image
 on:
   workflow_call:
+    secrets:
+      kubeconfig:
+        required: true
     inputs:
       env_name:
         required: true
@@ -39,5 +42,24 @@ jobs:
           context: ./${{ env.APP_DIR }}
           push: true
           tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.APP_DIR }}:${{ inputs.build_number_org }}
+  deploy:
+    name: Deploy Kubernetes
+    runs-on: ubuntu-latest
+    permissions: write-all
+    needs: [build]
+    environment:
+      name: ${{inputs.env_name}}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Set Kubernetes Context
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.kubeconfig }}
+      - name: Deploy to ConfigMap
+        run: | 
+          manifest=`cat "./${{ inputs.app_dir}}/configmap.yaml" | sed 's/$NAMESPACE/${{ inputs.env_name }}/ ; s/$LAST_BUILD_IMAGE/${{ inputs.build_number_org }}/ ; s/$APP_VERSION/${{ inputs.build_number_org }}/ ; s/$LAST_BUILD_IMAGE/${{ inputs.build_number_org }}/ ; s/$APP_ENVIRONMENT/${{ inputs.env_name }}/' ./${{ inputs.app_dir}}/configmap.yaml`
+          echo "$manifest" | kubectl apply -f -
 
       
