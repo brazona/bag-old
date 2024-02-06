@@ -150,7 +150,7 @@ jobs:
   
   delete-branch:
     needs: [info-environment, build]
-    if: contains(${{needs.info-environment.outputs.branch_target}} , 'main') || startsWith(${{needs.info-environment.outputs.branch_target}} , 'release')
+    if: ${{needs.info-environment.outputs.is_delete}} 
     permissions: write-all
     uses: ./.github/workflows/delete-branch.yml
     with:
