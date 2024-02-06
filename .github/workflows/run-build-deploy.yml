@@ -27,6 +27,7 @@ jobs:
       branch_source: ${{ steps.branch_source.outputs.branch_source }}
       branch_target: ${{ steps.branch_target.outputs.branch_target }}
       tag: ${{ steps.tag.outputs.tag }}
+      is_delete: ${{ steps.is_delete.outputs.is_delete }}
     steps:
       - name: Verify type Event Branch Target
         if: contains(env.EVENT_TYPE, 'pull_request')
@@ -69,6 +70,10 @@ jobs:
       - name: Defined Tag Docker
         id: tag
         run: echo "tag=${{github.run_number}}-$VERSION_TYPE" >> $GITHUB_OUTPUT
+      - name: Verify Delete Branch 
+        if: contains(env.BRANCH_TARGET, 'main') || startsWith(env.BRANCH_TARGET, 'release')
+        id: is_delete
+        run: echo "is_delete=true" >> $GITHUB_OUTPUT
   compile:
     name: Run Maven Project
     runs-on: ubuntu-latest
@@ -141,5 +146,13 @@ jobs:
           manifest=`cat "./${{ env.APP }}/deployment.yaml" | sed 's/$NAMESPACE/${{ env.NAMESPACE }}/ ; s/$DNS/${{ env.DNS }}/ ; s/$TAG/${{ env.TAG_IMAGE}}/ ; s/$APP_VERSION/${{ env.TAG_IMAGE}}/ ; s/$APP_ENVIRONMENT/${{ env.NAMESPACE}}/' ./${{ env.APP}}/deployment.yaml`
           echo "$manifest" | kubectl apply -f -
   
+  delete-branch:
+    needs: [info-environment, build]
+    if: ${{needs.info-environment.outputs.is_delete}} 
+    permissions: write-all
+    uses: ./.github/workflows/delete-branch.yml
+    with:
+      branch: ${{needs.info-environment.outputs.branch_source}}
+
 
 
