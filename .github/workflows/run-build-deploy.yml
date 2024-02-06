@@ -140,20 +140,6 @@ jobs:
         run: | 
           manifest=`cat "./${{ env.APP }}/deployment.yaml" | sed 's/$NAMESPACE/${{ env.NAMESPACE }}/ ; s/$DNS/${{ env.DNS }}/ ; s/$TAG/${{ env.TAG_IMAGE}}/ ; s/$APP_VERSION/${{ env.TAG_IMAGE}}/ ; s/$APP_ENVIRONMENT/${{ env.NAMESPACE}}/' ./${{ env.APP}}/deployment.yaml`
           echo "$manifest" | kubectl apply -f -
-
-  pull-request:
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-    - uses: actions/checkout@v3
-    - name: pull-request
-      uses: repo-sync/pull-request@v2
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: update-pull-request
-      uses: kt3k/update-pr-description@v2
-      with:
-        pr_body: "**some description**"
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+  
 
 
