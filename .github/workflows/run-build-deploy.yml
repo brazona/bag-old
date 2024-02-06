@@ -149,15 +149,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Comment PR
-        uses: thollander/actions-comment-pull-request@v2
-        env:
-          pr_number: ${{env.PR_NUMBER}}
-        with:
-          message: |
-            Hello world ! :wave: :laugh: :confused: :heart: :hooray: :rocket: :eyes:
-          pr_number: ${{env.pr_number}} # This will comment on pull request #123
       
       - name: Checkout
         uses: actions/checkout@v2

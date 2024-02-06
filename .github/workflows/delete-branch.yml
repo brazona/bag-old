@@ -7,9 +7,6 @@ on:
     paths-ignore:
       - '.resources/**'
   workflow_dispatch:
-env:
-  BRANCH_SOURCE: 
-  
 jobs:
   delete-branch:
     runs-on: ubuntu-latest
