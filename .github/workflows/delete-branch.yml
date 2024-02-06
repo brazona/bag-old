@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - 'main'
-      - 'releases/**'
+      - 'release/**'
     paths-ignore:
       - '.resources/**'
   workflow_dispatch:

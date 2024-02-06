@@ -2,7 +2,7 @@ name: Run Build Docker and Deploy K8S
 on:
   pull_request:
     branches:
-      - 'releases/**'
+      - 'release/**'
       - 'develop'
     paths-ignore:
       - '.resources/**'
