@@ -2,7 +2,6 @@ name: Run Build Docker and Deploy K8S
 on:
   pull_request:
     branches:
-      - 'main'
       - 'releases/**'
       - 'develop'
     paths-ignore:
@@ -17,6 +16,7 @@ env:
   REGISTRY_DOCKER: ghcr.io
   REPOSITORY_DOCKER: ${{ github.repository }}
   VERSION_TYPE: ''
+  PR_NUMBER: ${{ github.event.number }}
   
 jobs:
   info-environment:
@@ -140,5 +140,6 @@ jobs:
         run: | 
           manifest=`cat "./${{ env.APP }}/deployment.yaml" | sed 's/$NAMESPACE/${{ env.NAMESPACE }}/ ; s/$DNS/${{ env.DNS }}/ ; s/$TAG/${{ env.TAG_IMAGE}}/ ; s/$APP_VERSION/${{ env.TAG_IMAGE}}/ ; s/$APP_ENVIRONMENT/${{ env.NAMESPACE}}/' ./${{ env.APP}}/deployment.yaml`
           echo "$manifest" | kubectl apply -f -
+  
 
 
