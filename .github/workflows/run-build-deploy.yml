@@ -70,12 +70,10 @@ jobs:
       - name: Defined Tag Docker
         id: tag
         run: echo "tag=${{github.run_number}}-$VERSION_TYPE" >> $GITHUB_OUTPUT
-
       - name: Verify Delete Branch 
         if: contains(env.BRANCH_TARGET, 'main') || startsWith(env.BRANCH_TARGET, 'release')
         id: is_delete
         run: echo "is_delete=true" >> $GITHUB_OUTPUT
-      
   compile:
     name: Run Maven Project
     runs-on: ubuntu-latest
@@ -155,5 +153,6 @@ jobs:
     uses: ./.github/workflows/delete-branch.yml
     with:
       branch: ${{needs.info-environment.outputs.branch_source}}
+
 
 
