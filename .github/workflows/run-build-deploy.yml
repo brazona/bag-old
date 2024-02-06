@@ -147,7 +147,7 @@ jobs:
         run: | 
           manifest=`cat "./${{ env.APP }}/deployment.yaml" | sed 's/$NAMESPACE/${{ env.NAMESPACE }}/ ; s/$DNS/${{ env.DNS }}/ ; s/$TAG/${{ env.TAG_IMAGE}}/ ; s/$APP_VERSION/${{ env.TAG_IMAGE}}/ ; s/$APP_ENVIRONMENT/${{ env.NAMESPACE}}/' ./${{ env.APP}}/deployment.yaml`
           echo "$manifest" | kubectl apply -f -
-  
+ 
   delete-branch:
     needs: [info-environment, build]
     if: ${{needs.info-environment.outputs.is_delete}}  && startsWith(${{needs.info-environment.outputs.branch_source}} , 'release') || startsWith(${{needs.info-environment.outputs.branch_source}} , 'feature')
@@ -155,4 +155,5 @@ jobs:
     uses: ./.github/workflows/delete-branch.yml
     with:
       branch: ${{needs.info-environment.outputs.branch_source}}
+
 
