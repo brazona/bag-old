@@ -23,3 +23,13 @@ app-ui/.vscode
 app-ui/dist
 app-ui/node_modules
 app-ui/target
+app-ui/npm-debug.log
+app-ui/.angular
+app-ui/Dockerfile*
+app-ui/docker-compose*
+app-ui/.dockerignore
+app-ui/.git
+app-ui/.gitignore
+app-ui/README.md
+app-ui/deployment.yaml
+app-ui/.cache

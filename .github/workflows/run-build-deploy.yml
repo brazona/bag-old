@@ -123,10 +123,12 @@ jobs:
       - name: Build Docker Image
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         env:
-          APP: ${{ matrix.application }}
+          ##APP: ${{ matrix.application }}
+          APP: "app"
           TAG_IMAGE: ${{needs.info-environment.outputs.tag}}
         with:
-          context: ./${{ env.APP }}
+          #context: ./${{ env.APP }}
+          context: .
           push: true
           tags: ${{ env.REGISTRY_DOCKER }}/${{ github.repository }}/${{ env.APP }}:${{env.TAG_IMAGE}}
       
@@ -143,7 +145,7 @@ jobs:
           NAMESPACE: ${{needs.info-environment.outputs.environment_name}}
           DNS: ${{ vars.DNS }}
         run: | 
-          manifest=`cat "./${{ env.APP }}/deployment.yaml" | sed 's/$NAMESPACE/${{ env.NAMESPACE }}/ ; s/$DNS/${{ env.DNS }}/ ; s/$TAG/${{ env.TAG_IMAGE}}/ ; s/$APP_VERSION/${{ env.TAG_IMAGE}}/ ; s/$APP_ENVIRONMENT/${{ env.NAMESPACE}}/' ./${{ env.APP}}/deployment.yaml`
+          manifest=`cat "./deployment.yaml" | sed 's/$NAMESPACE/${{ env.NAMESPACE }}/ ; s/$DNS/${{ env.DNS }}/ ; s/$TAG/${{ env.TAG_IMAGE}}/ ; s/$APP_VERSION/${{ env.TAG_IMAGE}}/ ; s/$APP_ENVIRONMENT/${{ env.NAMESPACE}}/' ./deployment.yaml`
           echo "$manifest" | kubectl apply -f -
   
   delete-branch:

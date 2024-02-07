@@ -12,7 +12,7 @@ ENV APP_ENVIRONMENT $ENVIRONMENT
 
 WORKDIR /usr/src/app
 COPY . .
-RUN mvn clean install
+RUN mvn clean install -P prod
 
 ################
 # Run in NGINX #

@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "bash ./env.sh 'start' && ng serve -o",
-    "build": "bash ./env.sh 'build' && ng build --configuration production",
+    "start": "bash ./env-local.sh && ng serve -o",
+    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "clean": "rm -rf ./node_modules package-lock.json .cache dist",
