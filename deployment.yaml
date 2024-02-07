@@ -2,14 +2,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-ui-server
+  name: app-server
   namespace: $NAMESPACE
   labels:
-    app: app-ui-server
+    app: app-server
 spec:
   selector:
     matchLabels:
-      app: app-ui-server
+      app: app-server
   replicas: 1
   strategy:
     type: RollingUpdate
@@ -19,13 +19,13 @@ spec:
   template:
     metadata:
       labels:
-        app: app-ui-server
+        app: app-server
     spec:
       imagePullSecrets:
         - name: pipeline-docker-registry
       containers:
-      - name: app-ui
-        image: ghcr.io/brazona/business-administration-games/app-ui:$TAG
+      - name: app
+        image: ghcr.io/brazona/business-administration-games/app:$TAG
         ports:
         - containerPort: 80
           protocol: TCP
@@ -41,11 +41,11 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: app-ui-service
+  name: app-service
   namespace: $NAMESPACE
 spec:
   selector:
-    app: app-ui-server
+    app: app-server
   type: ClusterIP
   ports:
     - protocol: TCP
@@ -57,7 +57,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   namespace: $NAMESPACE
-  name: app-ui-ingress
+  name: app-ingress
   annotations:
     allow.http: "true"
 spec:
@@ -67,5 +67,5 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: app-ui-service
+              serviceName: app-service
               servicePort: 80

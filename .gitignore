@@ -85,6 +85,7 @@ Thumbs.db
 #/.resources/environments/***
 .env
 #environment.ts
-app-ui/src/environments/environment.local.ts
-app-ui/src/environments/environment.prod.ts
+### configurado para utilizar arquivos via versionamento
+#app-ui/src/environments/environment.local.ts
+#app-ui/src/environments/environment.prod.ts
 

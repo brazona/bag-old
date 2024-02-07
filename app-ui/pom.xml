@@ -12,48 +12,111 @@
 		<artifactId>bag</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<build>
-		<resources>
-			<resource>
-				<directory>./dist/frakton</directory>
-				<targetPath>static</targetPath>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>1.7.6</version>
-				<configuration>
-					<workingDirectory>./</workingDirectory>
-					<nodeVersion>v20.3.0</nodeVersion>
-					<npmVersion>9.6.7</npmVersion>
-				</configuration>
-				<executions>
-					<execution>
-						<id>install node and npm</id>
-						<goals>
-							<goal>install-node-and-npm</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>npm install</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>npm run build</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>dev</spring.profiles.active>
+			</properties>
+			<build>
+				<resources>
+					<resource>
+						<directory>./dist/frakton</directory>
+						<targetPath>static</targetPath>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>1.7.6</version>
 						<configuration>
-							<arguments>run build</arguments>
+							<workingDirectory>./</workingDirectory>
+							<nodeVersion>v20.3.0</nodeVersion>
+							<npmVersion>9.6.7</npmVersion>
 						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+						<executions>
+							<execution>
+								<id>install node and npm</id>
+								<goals>
+									<goal>install-node-and-npm</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>npm run reinstall</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run reinstall</arguments>
+								</configuration>
+							</execution>
+							<execution>
+								<id>npm run start</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run start</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<spring.profiles.active>prod</spring.profiles.active>
+			</properties>
+			<build>
+				<resources>
+					<resource>
+						<directory>./dist/frakton</directory>
+						<targetPath>static</targetPath>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>1.7.6</version>
+						<configuration>
+							<workingDirectory>./</workingDirectory>
+							<nodeVersion>v20.3.0</nodeVersion>
+							<npmVersion>9.6.7</npmVersion>
+						</configuration>
+						<executions>
+							<execution>
+								<id>install node and npm</id>
+								<goals>
+									<goal>install-node-and-npm</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>npm install</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>npm run build</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run build --prod</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>
