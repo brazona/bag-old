@@ -37,18 +37,12 @@
 						</goals>
 					</execution>
 					<execution>
-						<id>npm install</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>npm run clean</id>
+						<id>npm run reinstall</id>
 						<goals>
 							<goal>npm</goal>
 						</goals>
 						<configuration>
-							<arguments>run clean</arguments>
+							<arguments>run reinstall</arguments>
 						</configuration>
 					</execution>
 					<execution>
@@ -57,7 +51,7 @@
 							<goal>npm</goal>
 						</goals>
 						<configuration>
-							<arguments>run build</arguments>
+							<arguments>run build --prod</arguments>
 						</configuration>
 					</execution>
 				</executions>

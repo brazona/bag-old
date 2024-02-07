@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "bash ./env.sh 'start' && ng serve",
+    "start": "bash ./env.sh 'start' && ng serve -o",
     "build": "bash ./env.sh 'build' && ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "clean": "rm -rf ./node_modules package-lock.json .cache dist"
+    "clean": "rm -rf ./node_modules package-lock.json .cache dist",
+    "reinstall": "npm run clean && npm install"
   },
   "private": true,
   "dependencies": {
