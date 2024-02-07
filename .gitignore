@@ -77,15 +77,6 @@ Thumbs.db
 /.idea/
 
 #environments
-## Implementar arquivo .env com o arquivo environment
-
-#/.resources/environments/***
-## Implementar arquivo .env com o arquivo environment
-
-#/.resources/environments/***
 .env
-#environment.ts
-### configurado para utilizar arquivos via versionamento
-#app-ui/src/environments/environment.local.ts
-#app-ui/src/environments/environment.prod.ts
+app-ui/src/assets/env.js
 
