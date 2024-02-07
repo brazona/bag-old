@@ -1,17 +1,15 @@
 #!/bin/bash
-
 NPM_RUN="$1"
-ENV_CLOUD="build"
-
 rm -rf ./src/environments/environment.prod.ts
 rm -rf ./src/environments/environment.local.ts
 rm -rf ./src/assets/env.run-time.js
 rm -rf lista_env.txt
-
-if [ $NPM_RUN = $ENV_CLOUD ] 
+if [ $NPM_RUN = "build" ] 
 then
+  echo "Run script Environment Container Docker"
   cp ./src/environments/environment.ts ./src/environments/environment.prod.ts
 else
+  echo "Run script Environment Localhost"
   cp ./src/environments/environment.ts ./src/environments/environment.local.ts
   cp ./src/assets/env.template.js ./src/assets/env.run-time.js
   while read -r line || [[ -n "$line" ]];
