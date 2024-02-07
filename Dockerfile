@@ -5,7 +5,7 @@ FROM maven:3.8.4-eclipse-temurin-11 AS build
 #
 # Defaults to production, docker-compose overrides this to development on build and run.
 ARG ENVIRONMENT=dockerfile
-ARG VERSION=1.0.10
+ARG VERSION=1.0.1
 
 ENV APP_VERSION $VERSION
 ENV APP_ENVIRONMENT $ENVIRONMENT

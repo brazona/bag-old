@@ -46,13 +46,10 @@
 								</goals>
 							</execution>
 							<execution>
-								<id>npm run reinstall</id>
+								<id>npm install</id>
 								<goals>
 									<goal>npm</goal>
 								</goals>
-								<configuration>
-									<arguments>run reinstall</arguments>
-								</configuration>
 							</execution>
 							<execution>
 								<id>npm run start</id>

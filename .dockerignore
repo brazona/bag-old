@@ -1,4 +1,5 @@
 .github
+.resources
 npm-debug.log
 Dockerfile*
 docker-compose*
@@ -33,3 +34,4 @@ app-ui/.gitignore
 app-ui/README.md
 app-ui/deployment.yaml
 app-ui/.cache
+app-ui/src/assets/env.js
