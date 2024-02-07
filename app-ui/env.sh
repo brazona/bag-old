@@ -1,5 +1,7 @@
 #!/bin/bash
 NPM_RUN="$1"
+PATH_ENV=../.resources/environments/.env
+
 rm -rf ./src/environments/environment.prod.ts
 rm -rf ./src/environments/environment.local.ts
 rm -rf ./src/assets/env.run-time.js
@@ -19,7 +21,7 @@ else
     value='${'$varname'}'
     #sed -i 's/'$value'/'$varvalue'/' ./src/environments/environment.local.ts
     sed -i 's/'$value'/'$varvalue'/' ./src/assets/env.run-time.js  
-  done < ../.resources/environments/.env
+  done < "$PATH_ENV"
   envsubst < ./src/assets/env.run-time.js > ./src/assets/env.js
   rm -rf ./src/assets/env.run-time.js
 fi
