@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: api-gateway
+server:
+  port: ${API_GATEWAY_PORT}
+zuul:
+  routes:
+    authentication:
+      path: /authentication/**
+      service-id: authentication
+    authorization:
+      path: /authorization/**
+      service-id: authorization
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:${EUREKA_SERVER_PORT}/eureka
+  server:
+    enableSelfPreservation: 'false'
+ribbon:
+  ReadTimeout: '20000'
+  ConnectTimeout: '10000'
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: '60000'
+
