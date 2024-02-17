@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: users
+  cloud:
+    config:
+      uri: http://localhost:${CONFIG_SERVER_PORT}
+      fail-fast: true
+      username: ${SECURITY_NAME}
+      password: ${SECURITY_PASS}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

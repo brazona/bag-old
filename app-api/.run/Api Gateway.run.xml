@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Api Gateway" type="Application" factoryName="Application">
+  <configuration default="false" name="Api Gateway" type="Application" factoryName="Application" folderName="app-api">
     <option name="MAIN_CLASS_NAME" value="br.brazona.bag.apigateway.ApiGatewayApplication" />
     <module name="api-gateway" />
     <extension name="net.ashald.envfile">

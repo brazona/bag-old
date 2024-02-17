@@ -28,3 +28,8 @@ hystrix:
           thread:
             timeoutInMilliseconds: '60000'
 
+authorization:
+  jwt:
+    secret: ${AUTHORIZATION_JWT_SECRET}
+  routes:
+    public: {"/authentication/oauth/token", "/actuator/**"}

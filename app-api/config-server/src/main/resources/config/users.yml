@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: users
+  datasource:
+    url: jdbc:postgresql://${PG_HOST_SERVER}:${PG_HOST_SERVER_PORT}/${PG_DB_NAME}
+    username: ${PG_USER}
+    password: admin
+    default_schema: user_service
+    hikari:
+      connection-timeout: '20000'
+      idle-timeout: '10000'
+      maximum-pool-size: '40'
+      auto-commit: 'true'
+      minimum-idle: '10'
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    url: jdbc:postgresql://${PG_HOST_SERVER}:${PG_HOST_SERVER_PORT}/${PG_DB_NAME}
+    password: admin
+    user: ${PG_USER}
+    default_schema: user_service
+    enabled: true
+    change-log: classpath:db/changelog-master.yml
+    parameters:
+      sql_user_name_1: ${SQL_USER_NAME_1}
+      sql_user_name_2: ${SQL_USER_NAME_2}
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: 'true'
+        temp:
+          use_jdbc_metadata_defaults: 'false'
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    hibernate:
+      ddl-auto: none
+server:
+  port: ${PORT:0}
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:${EUREKA_SERVER_PORT}/eureka
+  server:
+    enableSelfPreservation: 'false'
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+logging:
+  level:
+    liquibase: debug
+

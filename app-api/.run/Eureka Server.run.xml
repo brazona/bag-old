@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Eureka Server" type="Application" factoryName="Application">
+  <configuration default="false" name="Eureka Server" type="Application" factoryName="Application" folderName="app-api">
     <option name="MAIN_CLASS_NAME" value="br.brazona.bag.eurekaserver.EurekaServerpplication" />
     <module name="eureka-server" />
     <extension name="net.ashald.envfile">

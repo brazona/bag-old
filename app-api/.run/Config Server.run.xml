@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Config Server" type="Application" factoryName="Application">
+  <configuration default="false" name="Config Server" type="Application" factoryName="Application" folderName="app-api">
     <option name="MAIN_CLASS_NAME" value="br.brazona.bag.configserver.ConfigServerApplication" />
     <module name="config-server" />
     <extension name="coverage">

@@ -14,11 +14,10 @@
 	<packaging>pom</packaging>
 	<modules>
 		<!-- <module>app-api</module> -->
-		<module>api-gateway</module>
-		<module>authentication</module>
-		<module>authorization</module>
 		<module>config-server</module>
 		<module>eureka-server</module>
+		<module>api-gateway</module>
+		<module>authentication</module>
 		<module>institutions</module>
 		<module>profiles</module>
 		<module>users</module>

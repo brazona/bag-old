@@ -1,0 +1,32 @@
+version: '3.5'
+services:
+  db:
+    container_name: db-server
+    image: "postgres:${PG_IMAGE_TAG}"
+    restart: always
+    environment:
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASS}
+      - POSTGRES_DB=${PG_DB_NAME}
+    ports:
+      - "5440:5432"
+    volumes:
+      - bag_postgres:/var/lib/postgresql/data
+      - ./create_database.sql:/docker-entrypoint-initdb.d/create_database.sql
+  db_admin:
+    image: dpage/pgadmin4:latest
+    container_name: db-server-admin
+    restart: always
+    depends_on:
+      - "db"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PG_USER_ADMIN}
+      PGADMIN_DEFAULT_PASSWORD: ${PG_PASS_ADMIN} 
+    ports:
+      - 8484:80
+    volumes:
+      - bag_pgadmin:/var/lib/pgadmin
+
+volumes:   
+  bag_postgres:
+  bag_pgadmin:
