@@ -8,9 +8,10 @@ zuul:
     authentication:
       path: /authentication/**
       service-id: authentication
-    authorization:
-      path: /authorization/**
-      service-id: authorization
+      sensitive-headers: Cookie,Set-Cookie
+    users:
+      path: /users/**
+      service-id: users
 eureka:
   client:
     service-url:
@@ -31,5 +32,19 @@ hystrix:
 authorization:
   jwt:
     secret: ${AUTHORIZATION_JWT_SECRET}
-  routes:
-    public: {"/authentication/oauth/token", "/actuator/**"}
+oauth:
+  client:
+    secret: ${AUTHENTICATION_PASS}
+    name: ${AUTHENTICATION_USER}
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

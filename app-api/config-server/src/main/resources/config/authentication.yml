@@ -13,8 +13,13 @@ eureka:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 oauth:
   client:
-    secret: myappsecret123
-    name: myappname123
-jwt:
-  secret: MY-JWT-SECRET
-
+    secret: ${AUTHENTICATION_PASS}
+    name: ${AUTHENTICATION_USER}
+authorization:
+  jwt:
+    secret: ${AUTHORIZATION_JWT_SECRET}
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

@@ -26,6 +26,7 @@ spring:
   jpa:
     properties:
       hibernate:
+        default_schema: user_service
         jdbc:
           lob:
             non_contextual_creation: 'true'
