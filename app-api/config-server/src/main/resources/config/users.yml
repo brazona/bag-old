@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://${PG_HOST_SERVER}:${PG_HOST_SERVER_PORT}/${PG_DB_NAME}
     username: ${PG_USER}
-    password: admin
+    password: ${PG_PASS}
     default_schema: user_service
     hikari:
       connection-timeout: '20000'
@@ -15,7 +15,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   liquibase:
     url: jdbc:postgresql://${PG_HOST_SERVER}:${PG_HOST_SERVER_PORT}/${PG_DB_NAME}
-    password: admin
+    password: ${PG_PASS}
     user: ${PG_USER}
     default_schema: user_service
     enabled: true
@@ -40,7 +40,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:${EUREKA_SERVER_PORT}/eureka
+      defaultZone: http://${EUREKA_HOST_SERVER}:${EUREKA_SERVER_PORT}/eureka
   server:
     enableSelfPreservation: 'false'
   instance:

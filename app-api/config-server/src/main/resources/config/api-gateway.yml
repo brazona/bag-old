@@ -15,7 +15,7 @@ zuul:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:${EUREKA_SERVER_PORT}/eureka
+      defaultZone: http://${EUREKA_HOST_SERVER}:${EUREKA_SERVER_PORT}/eureka
   server:
     enableSelfPreservation: 'false'
 ribbon:
