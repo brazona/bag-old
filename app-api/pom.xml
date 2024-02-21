@@ -10,8 +10,28 @@
 	<groupId>br.brazona.bag</groupId>
 	<artifactId>bag-app-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bag-app-api</name>
 	<packaging>pom</packaging>
+	<name>bag-app-api</name>
+	<properties>
+		<springfox.version>2.7.0</springfox.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${springfox.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${springfox.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 	<modules>
 		<!-- <module>app-api</module> -->
 		<module>config-server</module>

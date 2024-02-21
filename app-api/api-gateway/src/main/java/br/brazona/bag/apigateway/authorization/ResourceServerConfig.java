@@ -26,7 +26,19 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private JwtTokenStore jwtTokenStore;
 
-    private static final String[] PUBLIC = {"/authentication/oauth/token", "/actuator/**"};
+    private static final String[] PUBLIC = {
+            "/authentication/oauth/token"
+            ,"/actuator/**"
+            ,"/actuator/health/**"
+            ,"/webjars/**"
+            ,"/swagger-ui.html"
+            ,"/swagger-resources/**"
+            ,"/v2/api-docs/**"
+            ,"/users/v2/api-docs/**"
+            ,"/authentication/v2/api-docs/**"
+            ,"/swagger"
+            ,"/docs"
+    };
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources)  {

@@ -1,4 +1,4 @@
-package br.brazona.bag.authentication.config;
+package br.brazona.bag.authentication.config.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
