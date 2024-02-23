@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "0e683c26-3568-4da6-bab8-80eaff825d7a",
+		"name": "brazona-administration-games",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "9570826-0e683c26-3568-4da6-bab8-80eaff825d7a"
+	},
+	"item": [
+		{
+			"name": "authentication",
+			"item": [
+				{
+					"name": "oauth2/token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ee596b83-681f-4726-a410-542a6d6618fb",
+								"exec": [
+									"if (responseCode.code >= 200 && responseCode.code < 300) {\r",
+									"    var json = JSON.parse(responseBody);\r",
+									"    postman.setEnvironmentVariable('token', json.access_token);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "3fb03083-e4d0-4bd4-86ba-f4da457d5b2e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{auth_pass}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{auth_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "{{user_name}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{user_pass}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "{{user_grant}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/authentication/oauth/token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"authentication",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "f558c60e-82cb-49f1-8875-d4592955e402"
+		}
+	]
+}
