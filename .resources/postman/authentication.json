@@ -1,0 +1,83 @@
+{
+	"info": {
+		"_postman_id": "95d02818-844c-408f-9d08-df138d5e8004",
+		"name": "authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "9570826-95d02818-844c-408f-9d08-df138d5e8004"
+	},
+	"item": [
+		{
+			"name": "oauth2/token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "41d08789-834e-4c21-8299-05ddaf539505",
+						"exec": [
+							"if (responseCode.code >= 200 && responseCode.code < 300) {\r",
+							"    var json = JSON.parse(responseBody);\r",
+							"    postman.setEnvironmentVariable('token', json.access_token);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "d3e2154c-6cc4-4005-a3ae-549fa52ffcbf",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{auth_pass}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{auth_user}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "{{user_name}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{user_pass}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "{{user_grant}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/authentication/oauth/token",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"authentication",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
