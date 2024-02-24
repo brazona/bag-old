@@ -36,6 +36,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             ,"/v2/api-docs/**"
             ,"/users/v2/api-docs/**"
             ,"/authentication/v2/api-docs/**"
+            ,"/authentication/swagger/**"
             ,"/swagger"
             ,"/docs"
     };
@@ -53,7 +54,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/authentication/oauth/token").permitAll()
                 .anyRequest().authenticated();
 
-        //http.cors().configurationSource(corsConfigurationSource());
+        http.cors().configurationSource(corsConfigurationSource());
     }
 
     @Bean

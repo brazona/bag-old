@@ -3,7 +3,9 @@ package br.brazona.bag.authentication.config.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -35,10 +37,24 @@ public class AuthorizationServiceConfig extends AuthorizationServerConfigurerAda
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    private static final String[] PUBLIC = {
+            "/authentication/oauth/token"
+            ,"/actuator/**"
+            ,"/actuator/health/**"
+            ,"/webjars/**"
+            ,"/swagger-ui.html"
+            ,"/swagger-resources/**"
+            ,"/v2/api-docs/**"
+            ,"/users/v2/api-docs/**"
+            ,"/authentication/v2/api-docs/**"
+            ,"/swagger"
+            ,"/docs"
+    };
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 
-        security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+        security
+                .tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
     }
 
     @Override

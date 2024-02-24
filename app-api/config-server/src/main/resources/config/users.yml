@@ -48,5 +48,7 @@ eureka:
 logging:
   level:
     liquibase: debug
-openapi:
-  server: ${HOST_APP_API}
+springdoc:
+  swagger-ui:
+    csrf:
+      enabled: true

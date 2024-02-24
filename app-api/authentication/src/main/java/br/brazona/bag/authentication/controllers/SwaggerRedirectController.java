@@ -12,6 +12,6 @@ public class SwaggerRedirectController {
     @RequestMapping(value = {"", "/swagger", "/docs"}, method = RequestMethod.GET)
     public String redirectSwagger() {
 
-        return "redirect:/swagger-ui.html";
+        return "redirect:/v2/api-docs";
     }
 }

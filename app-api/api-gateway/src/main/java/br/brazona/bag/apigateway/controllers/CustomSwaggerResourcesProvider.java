@@ -23,7 +23,7 @@ public class CustomSwaggerResourcesProvider implements SwaggerResourcesProvider 
 
         return Arrays.asList(
                 swaggerResource("users", "/users/v2/api-docs"),
-                swaggerResource("authentication", "/authentication/v2/api-docs")
+                swaggerResource("authentication", "/authentication/swagger")
         );
     }
 

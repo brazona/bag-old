@@ -2,16 +2,22 @@ package br.brazona.bag.apigateway.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+import org.springframework.web.bind.annotation.RequestMethod;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
+import springfox.documentation.builders.ResponseMessageBuilder;
+import springfox.documentation.schema.ModelRef;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 public class SwaggerConfig {
+    private static final String SCHEME_NAME = "basicAuth";
+    private static final String SCHEME = "basic";
 
     @Bean
     public Docket api() {
@@ -19,16 +25,44 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("br.brazona"))
-                .build();
+                .build()
+                .useDefaultResponseMessages(false)
+                .globalResponseMessage(RequestMethod.GET, responseMessageForGET())
+                .securitySchemes(basicScheme())
+                .apiInfo(apiInfo());
     }
-    private ApiInfo metaData() {
+
+    private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Brazona Administration Game")
                 .description("Brazona Administration Game (BAG), é um software capaz de simular relações de trabalho do ambiente corporativo com ênfase nos conceitos da Administração.O conteúdo tem carater educacional e oferece aos usuários a experiência de exercer funções ligadas a administração")
                 .version("1.0.0")
-                //.license("Apache License Version 2.0")
-                //.licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
                 .contact(new Contact("Cézar Silva", "ww.brazona.com.br", "contato@brazona.com.br"))
                 .build();
     }
+
+    private List<SecurityScheme> basicScheme() {
+        List<SecurityScheme> schemeList = new ArrayList<>();
+        schemeList.add(new BasicAuth("basicAuth"));
+        return schemeList;
+    }
+
+    private List<ResponseMessage> responseMessageForGET() {
+        return new ArrayList<ResponseMessage>() {
+            private static final long serialVersionUID = 1L;
+
+            {
+                add(new ResponseMessageBuilder()
+                        .code(500)
+                        .message("500 message")
+                        .responseModel(new ModelRef("Error"))
+                        .build());
+                add(new ResponseMessageBuilder()
+                        .code(403)
+                        .message("Forbidden!")
+                        .build());
+            }
+        };
+    }
+
 }
