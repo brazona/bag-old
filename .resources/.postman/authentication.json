@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "95d02818-844c-408f-9d08-df138d5e8004",
+		"_postman_id": "7159679d-1f13-4713-ade2-f819c2aded48",
 		"name": "authentication",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "9570826-95d02818-844c-408f-9d08-df138d5e8004"
+		"_uid": "9570826-7159679d-1f13-4713-ade2-f819c2aded48"
 	},
 	"item": [
 		{
@@ -12,7 +12,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "41d08789-834e-4c21-8299-05ddaf539505",
+						"id": "beab4b22-e2f2-4166-b1b9-fd5a901bf92a",
 						"exec": [
 							"if (responseCode.code >= 200 && responseCode.code < 300) {\r",
 							"    var json = JSON.parse(responseBody);\r",
@@ -23,7 +23,7 @@
 					}
 				}
 			],
-			"id": "d3e2154c-6cc4-4005-a3ae-549fa52ffcbf",
+			"id": "c26bad97-314a-4101-b3e6-41d6cc5919c0",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
