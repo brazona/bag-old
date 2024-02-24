@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "7159679d-1f13-4713-ade2-f819c2aded48",
 		"name": "authentication",
+		"description": "This endpoint provides the application access token.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_uid": "9570826-7159679d-1f13-4713-ade2-f819c2aded48"
 	},
@@ -77,7 +78,74 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"id": "d1002af3-50fb-45e0-8c72-df4694e8bcbd",
+					"name": "oauth2/token",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "{{user_name}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{user_pass}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "{{user_grant}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/authentication/oauth/token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"authentication",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"_postman_previewlanguage": "Text",
+					"cookie": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "3428d3a2-197d-4a89-9e3d-9c1c8e21c804",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6c297723-b768-49aa-848d-f37d237692f4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
