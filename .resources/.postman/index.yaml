@@ -1,29 +1,23 @@
 openapi: '3.0.0'
 info:
   version: '1.0.0'
-  title: 'Sample API'
-  description: Buy or rent spacecrafts
+  title: 'BAG API'
+  description: API for the brazona administration games application, which provides information for connecting to the app api interface. 
 
 paths:
-  /spacecrafts/{spacecraftId}:
-    parameters:
-      - name: spacecraftId
-        description: The unique identifier of the spacecraft
-        in: path
-        required: true
-        schema:
-          $ref: '#/components/schemas/SpacecraftId'
-    get:
-      summary: Read a spacecraft
+  /authentication/oauth2/token:
+
+    post:
+      summary: Fetch the authentication token
       responses:
         '200':
-          description: The spacecraft corresponding to the provided `spacecraftId`
+          description: This endpoint provides the application access token.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Spacecraft'
+                $ref: '#/components/schemas/Auth'
         404:
-          description: No spacecraft found for the provided `spacecraftId`
+          description: No Auth found for the provided `UserId`
           content:
             application/json:
               schema:
@@ -36,18 +30,18 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    SpacecraftId:
-      description: The unique identifier of a spacecraft
+    UserId:
+      description: The unique identifier of a Auth
       type: string
-    Spacecraft:
+    Auth:
       type: object
       required:
-        - id
-        - name
-        - type
+        - username
+        - password
+        - grand_type
       properties:
         id:
-          $ref: '#/components/schemas/SpacecraftId'
+          $ref: '#/components/schemas/UserId'
         name:
           type: string
         type:
@@ -69,9 +63,9 @@ components:
           description: A human readable error message
           type: string
   securitySchemes:
-    ApiKey:
-      type: apiKey
+    BasicAuth:
+      type: BasicAuth
       in: header
-      name: X-Api-Key
+      name: X-Basic-Auth
 security:
-  - ApiKey: []
+  - BasicAuth: []
