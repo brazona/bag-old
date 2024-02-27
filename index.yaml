@@ -1,0 +1,73 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: 'Sample API'
+  description: Buy or rent spacecrafts
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /spacecrafts/{spacecraftId}:
+    parameters:
+      - name: spacecraftId
+        description: The unique identifier of the spacecraft
+        in: path
+        required: true
+        type: string
+    get:
+      summary: Read a spacecraft
+      responses:
+        '200':
+          description: The spacecraft corresponding to the provided `spacecraftId`
+          schema:
+            $ref: '#/definitions/Spacecraft'
+        404:
+          description: No spacecraft found for the provided `spacecraftId`
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  Spacecraft:
+    type: object
+    required:
+      - id
+      - name
+      - type
+    properties:
+      id:
+        description: The unique identifier of a spacecraft
+        type: string
+      name:
+        type: string
+      type:
+        type: string
+        enum:
+          - capsule
+          - probe
+          - satellite
+          - spaceplane
+          - station
+      description:
+        type: string
+  Error:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        description: A human readable error message
+        type: string
+securityDefinitions:
+  ApiKey:
+    type: apiKey
+    in: header
+    name: X-Api-Key
+security:
+  - ApiKey: []
