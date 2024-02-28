@@ -80,7 +80,7 @@
 			},
 			"response": [
 				{
-					"id": "fdea6b8e-e9c2-478d-80f9-95ef44c99145",
+					"id": "05de87f6-3ba5-445d-8089-41a1841f52cf",
 					"name": "oauth2/token",
 					"originalRequest": {
 						"method": "POST",
@@ -117,9 +117,69 @@
 							]
 						}
 					},
-					"_postman_previewlanguage": "Text",
-					"_postman_previewtype": "html",
-					"cookie": []
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 27 Feb 2024 22:27:37 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDkxNTkyNTcsInVzZXJfbmFtZSI6ImNlemFyQGdtYWlsLmNvbSIsImp0aSI6IjFkNDJkYmFiLTI5NzgtNDk4MC1hMTQxLTk1YzBjY2Q5ZDNjZSIsImNsaWVudF9pZCI6IkRFVkVMT1BfV1VoUzRaN2JyUSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdfQ.wAXcSF6uW4bp_E79WchSwZG80fgkDuLT-LyanDeY8Zs\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 86399,\n    \"scope\": \"read write\",\n    \"jti\": \"1d42dbab-2978-4980-a141-95c0ccd9d3ce\"\n}"
 				}
 			]
 		}
