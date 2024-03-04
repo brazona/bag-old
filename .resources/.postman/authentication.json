@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "3373b8e6-4f81-4073-8061-ab126144f19d",
+		"_postman_id": "4f73afda-7816-431a-840b-e4565dc1f21a",
 		"name": "authentication",
 		"description": "This endpoint provides the application access token.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "9570826-3373b8e6-4f81-4073-8061-ab126144f19d"
+		"_uid": "9570826-4f73afda-7816-431a-840b-e4565dc1f21a"
 	},
 	"item": [
 		{
@@ -13,7 +13,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "9ddce5d6-7027-47e9-a225-a66c39cb49fe",
+						"id": "ba9b33f4-de20-4915-9acf-0970e645d51e",
 						"exec": [
 							"if (responseCode.code >= 200 && responseCode.code < 300) {\r",
 							"    var json = JSON.parse(responseBody);\r",
@@ -24,7 +24,7 @@
 					}
 				}
 			],
-			"id": "66271c11-becb-4dc5-b575-62abc2964ee5",
+			"id": "74d484e1-1d5d-4910-92b6-bae6ec616389",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -80,7 +80,7 @@
 			},
 			"response": [
 				{
-					"id": "05de87f6-3ba5-445d-8089-41a1841f52cf",
+					"id": "7bb6608d-d669-4670-9a11-61035747669d",
 					"name": "oauth2/token",
 					"originalRequest": {
 						"method": "POST",
@@ -120,6 +120,7 @@
 					"status": "OK",
 					"code": 200,
 					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "html",
 					"header": [
 						{
 							"key": "Vary",
@@ -191,7 +192,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "b21c2bc1-efee-4989-bd43-d5ad99269309",
+				"id": "1b95fbec-4957-4990-bb98-b0a0ebf38a49",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -201,7 +202,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "3cbdbc63-7580-4280-8de2-67bbe0697e20",
+				"id": "b2258d00-1cb4-4e28-99dd-507a0c3eded5",
 				"type": "text/javascript",
 				"exec": [
 					""
