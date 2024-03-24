@@ -1,0 +1,187 @@
+_type: export
+__export_format: 4
+__export_date: 2024-03-24T19:55:26.304Z
+__export_source: insomnia.desktop.app:v8.6.1
+resources:
+  - _id: req_bfd79ac0951e4540a2d8cbde579d21b1
+    parentId: fld_7aceca3596ad480b997454a66057cffd
+    modified: 1711304738646
+    created: 1711304738646
+    url: "{{host}}/authentication/oauth/token"
+    name: oauth2/token
+    description: ""
+    method: POST
+    body:
+      params:
+        - value: "{{user_name}}"
+          name: username
+          disabled: false
+        - value: "{{user_pass}}"
+          name: password
+          disabled: false
+        - value: "{{user_grant}}"
+          name: grant_type
+          disabled: false
+      mimeType: application/x-www-form-urlencoded
+    parameters: []
+    headers: []
+    authentication:
+      type: basic
+      disabled: false
+      username: "{{auth_user}}"
+      password: "{{auth_pass}}"
+    metaSortKey: -1711304738646
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_7aceca3596ad480b997454a66057cffd
+    parentId: wrk_2ce63082e0374e1f9d1febc5e99f4d38
+    modified: 1711304738604
+    created: 1711304738604
+    name: authentication
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1711304738604
+    _type: request_group
+  - _id: wrk_2ce63082e0374e1f9d1febc5e99f4d38
+    parentId: null
+    modified: 1711231639297
+    created: 1711231639297
+    name: app-api-spec.yaml
+    description: ""
+    scope: design
+    _type: workspace
+  - _id: env_eef4aae3df0efe7a687a332997e112549849a549
+    parentId: wrk_2ce63082e0374e1f9d1febc5e99f4d38
+    modified: 1711231639306
+    created: 1711231639306
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1711231639306
+    _type: environment
+  - _id: jar_eef4aae3df0efe7a687a332997e112549849a549
+    parentId: wrk_2ce63082e0374e1f9d1febc5e99f4d38
+    modified: 1711231639310
+    created: 1711231639310
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_5a0201b2f682468289447892703fbe27
+    parentId: wrk_2ce63082e0374e1f9d1febc5e99f4d38
+    modified: 1711309280284
+    created: 1711231651023
+    fileName: New Document
+    contents: >-
+      openapi: 3.0.0
+
+      info:
+        description: "This is the bag-app-api API documentation.  
+          For this sample, you can use username
+          `username-key` and password `password-key`, to generate token access."
+        version: 1.0.0
+        title: API BAG
+        termsOfService: http://swagger.io/terms/
+        contact:
+          email: contato@brazona.com
+        license:
+          name: Apache 2.0
+          url: http://www.apache.org/licenses/LICENSE-2.0.html
+      tags:
+        - name: authentication
+          description: Authentication of user credentials
+          externalDocs:
+            description: Find out more
+            url: http://swagger.io
+      paths:
+        /authentication/oauth/token:
+          post:
+            tags:
+              - authentication
+            summary: Generate access token
+            description: "When providing a valid username and password, this endpoint returns the access token."
+            operationId: Auth
+            requestBody:
+              content:
+                application/json:
+                #application/x-www-form-urlencoded:
+                  schema:
+                    $ref: '#/components/schemas/Auth'
+              description: Body user auth
+              required: true
+            responses:
+              "405":
+                description: Invalid input
+      servers:
+        - url: http://localhost:8080
+          description: Server Local
+      components:
+        schemas:
+          Auth:
+            type: object
+            properties:
+              username:
+                type: string
+                description: Name user
+              password:
+                type: string
+                description: Password user
+              grant_type:
+                type: string
+                description: Type authentication
+                enum:
+                  - password
+                  - credentials
+    contentType: yaml
+    _type: api_spec
+  - _id: env_64b5f80929f64977a995db56f6750d9e
+    parentId: env_eef4aae3df0efe7a687a332997e112549849a549
+    modified: 1711304682550
+    created: 1711304682550
+    name: bag-localhost-env-postman
+    data:
+      auth_user: DEVELOP_WUhS4Z7brQ
+      auth_pass: KM849FSR3I9FNC9OTBSR
+      token: ""
+      host: http://localhost:8080
+      host_config: http://localhost:8888
+      user_name: cezar@gmail.com
+      user_pass: "@Adm1202"
+      user_grant: password
+      auth_user_config: baf_ITHBJ
+      auht_pass_config: mk0s1GGEdR
+      "": DEVELOP_WUhS4Z7brQ
+      TOKEN: ""
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1711304682550
+    _type: environment
+  - _id: env_72ded9a16fcb4c2588173cbc0cda21fc
+    parentId: env_eef4aae3df0efe7a687a332997e112549849a549
+    modified: 1711304708342
+    created: 1711304708342
+    name: bag-docker-env-postman
+    data:
+      auth_user: DEVELOP_WUhS4Z7brQ
+      auth_pass: KM849FSR3I9FNC9OTBSR
+      token: ""
+      host: http://localhost:8080
+      host_config: http://localhost:8888
+      user_name: cezar@gmail.com
+      user_pass: "@Adm1202"
+      user_grant: password
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1711304708342
+    _type: environment
