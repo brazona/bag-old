@@ -10,4 +10,5 @@ Api-gateway
 60a3488a-eb6a-4359-9a33-762e972229ac
 authentication-server
 npx redoc-cli --output index.html bundle .resources/openapi/api-spec-v3.yaml
+npx @redocly/cli build-docs --config=./.resources/openapi/api-spec-v3.yaml
 npx redoc-cli --output index.html bundle openapi.yaml
