@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: users
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    #default_schema: user_service
+    hikari:
+      connection-timeout: '20000'
+      idle-timeout: '10000'
+      maximum-pool-size: '40'
+      auto-commit: 'true'
+      minimum-idle: '10'
+    driver-class-name: org.h2.Driver
+  liquibase:
+    url: jdbc:h2:mem:testdb
+    password:
+    user: sa
+    #default_schema: user_service
+    enabled: true
+    change-log: classpath:db/changelog-master.yml
+    parameters:
+      sql_user_name_1: teste1
+      sql_user_name_2: teste2
+  jpa:
+    properties:
+      hibernate:
+        #default_schema: user_service
+        jdbc:
+          lob:
+            non_contextual_creation: 'true'
+        temp:
+          use_jdbc_metadata_defaults: 'false'
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+server:
+  port: 100102
+logging:
+  level:
+    liquibase: debug
+
