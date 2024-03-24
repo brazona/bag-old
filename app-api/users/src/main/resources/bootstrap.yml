@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: foo
   application:
     name: users
   cloud:
@@ -7,7 +9,7 @@ spring:
       fail-fast: true
       username: ${SECURITY_NAME}
       password: ${SECURITY_PASS}
-management:
+management:    
   endpoints:
     web:
       exposure:
