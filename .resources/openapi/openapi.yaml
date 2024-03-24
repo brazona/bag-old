@@ -1,0 +1,58 @@
+openapi: 3.0.0
+info:
+  description: "This is the bag-app-api API documentation.  
+    For this sample, you can use username
+    `username-key` and password `password-key`, to generate token access."
+  version: 1.0.0
+  title: API BAG
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: contato@brazona.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+tags:
+  - name: authentication
+    description: Authentication of user credentials
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+paths:
+  /authentication/oauth/token:
+    post:
+      tags:
+        - authentication
+      summary: Generate access token
+      description: "When providing a valid username and password, this endpoint returns the access token."
+      operationId: Auth
+      requestBody:
+        content:
+          application/json:
+          #application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Auth'
+        description: Body user auth
+        required: true
+      responses:
+        "405":
+          description: Invalid input
+servers:
+  - url: http://localhost:8080
+    description: Server Local
+components:
+  schemas:
+    Auth:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Name user
+        password:
+          type: string
+          description: Password user
+        grant_type:
+          type: string
+          description: Type authentication
+          enum:
+            - password
+            - credentials
