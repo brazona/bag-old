@@ -10,12 +10,16 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
-
-      - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+      - name: Generate Redoc Cli
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.3.0
+      - run: npm ci
+      - run: npm test
+      - run: npx redoc-cli --output index.html bundle ./.resources/openapi/openapi.yaml
+      - name: Publish Index 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |
-          npx redoc-cli --output index.html bundle ./.resources/openapi/openapi.yaml
-          npx @redocly/cli build-docs --config=./.resources/openapi/openapi.yaml
           git checout gh-pages
           git add index.html
-          git commit -m "docs: gerado automaticamente index.html API reference"
+          git commit -m "docs: Index.html gerado automaticamente API reference"
           git push
