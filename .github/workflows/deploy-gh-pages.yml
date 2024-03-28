@@ -6,7 +6,7 @@ on:
       - '.github/workflows/deploy-gh-pages.yml'
   workflow_dispatch:
 env:
-  BRANCH_TARGET: ${{ github.ref_name }}
+  BRANCH_TARGET: gh-pages
 jobs:
   merge-branch:
     runs-on: ubuntu-latest
