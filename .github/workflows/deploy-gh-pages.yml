@@ -19,6 +19,7 @@ jobs:
           git fetch --all
           git checkout ${{ env.BRANCH_TARGET }} 
           git rebase ${{ github.ref }}
+          git rebase --skip
           git commit -m "'[Automated] Merged ${{ github.ref_name }} into target ${{ env.BRANCH_TARGET }}'"
           git push  
   generate-doc:
