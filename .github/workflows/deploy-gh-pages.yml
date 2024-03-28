@@ -9,13 +9,15 @@ jobs:
   merge-branch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: everlytic/branch-merge@1.1.2
+      - uses: actions/checkout@master
+      - name: Merge ${{ github.ref }} > gh-pages
+        uses: devmasx/merge-branch@master
         with:
+          type: now
+          target_branch: gh-pages
+          #commit_message_template: '[Automated] Merged into target'
+          message: '[Automated] Merged ${{ github.ref }} into target {target_branch}'
           github_token: ${{ github.token }}
-          source_ref: ${{ github.ref }}
-          target_branch: 'gh-pages'
-          commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
   generate-doc:
     runs-on: ubuntu-latest
     steps:
