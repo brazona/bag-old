@@ -5,17 +5,19 @@ on:
       - '.resources/openapi/**'
       - '.github/workflows/deploy-gh-pages.yml'
   workflow_dispatch:
+env:
+  BRANCH_TARGET: ${{ github.ref_name }}
 jobs:
   merge-branch:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
-        with:
-          ref: gh-pages
       - run: |
-          git merge ${{ github.ref }}
-          git commit -m "'[Automated] Merged ${{ github.ref_name }} into target {target_branch}'"
+          git fetch --all
+          git checkout ${{ env.BRANCH_TARGET }} 
+          git merge ${{ github.ref_name }}
+          git commit -m "'[Automated] Merged ${{ github.ref_name }} into target ${{ env.BRANCH_TARGET }}'"
           git push  
   generate-doc:
     runs-on: ubuntu-latest
