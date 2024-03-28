@@ -18,7 +18,7 @@ jobs:
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git fetch --all
           git checkout ${{ env.BRANCH_TARGET }} 
-          git merge ${{ github.ref_name }}
+          git merge ${{ github.ref_name }} --allow-unrelated-histories
           git commit -m "'[Automated] Merged ${{ github.ref_name }} into target ${{ env.BRANCH_TARGET }}'"
           git push  
   generate-doc:
