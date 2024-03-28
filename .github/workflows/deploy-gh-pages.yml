@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - '.resources/openapi/**'
+      - '.github/workflows/deploy-gh-pages.yml'
   workflow_dispatch:
 jobs:
   generate-doc:
@@ -17,7 +18,7 @@ jobs:
       - run: npx redoc-cli --output index.html bundle ./.resources/openapi/openapi.yaml
       - name: Publish Index 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |
-          git checout gh-pages
+          git checkout gh-pages
           git add index.html
           git commit -m "docs: Index.html gerado automaticamente API reference"
           git push
