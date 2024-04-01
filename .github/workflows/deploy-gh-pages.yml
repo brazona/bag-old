@@ -1,35 +1,19 @@
 name: Deploy API Reference 
 on:
   push:
+    branches:
+      - 'gh-pages'      
     paths:
       - '.resources/openapi/**'
       - '.github/workflows/deploy-gh-pages.yml'
   workflow_dispatch:
-env:
-  BRANCH_TARGET: gh-pages
 jobs:
-  merge-branch:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v4
-      - run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git fetch --all
-          git checkout ${{ env.BRANCH_TARGET }}
-          git rebase -Xours ${{ github.ref }}
-          git commit -m "'[Automated] Merged ${{ github.ref_name }} into target ${{ env.BRANCH_TARGET }}'"
-          git push  
   generate-doc:
     runs-on: ubuntu-latest
     permissions: write-all
-    needs: [merge-branch]
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
-        with:
-          ref: gh-pages
       - name: Generate Redoc Cli
         uses: actions/setup-node@v4
         with:
