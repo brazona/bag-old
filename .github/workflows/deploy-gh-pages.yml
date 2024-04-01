@@ -21,6 +21,8 @@ jobs:
       - run: npx redoc-cli --output index.html bundle ./.resources/openapi/openapi.yaml
       - name: Publish Index 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
           git commit -m "docs: Index.html gerado automaticamente API reference"
           git push
