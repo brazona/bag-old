@@ -1,7 +1,10 @@
-#################
-# Maven Build App #
-#################
-FROM maven:3.8.4-eclipse-temurin-11 AS build  
+################
+# Run APP API #
+################
+FROM openjdk:11
+ARG PATH_FILE
+VOLUME /tmp
+ 
 
 ARG API_GATEWAY_PORT=DEFAULT
 ARG EUREKA_SERVER_PORT=DEFAULT
@@ -46,18 +49,10 @@ ENV SQL_USER_NAME_2 $SQL_USER_NAME_2
 ENV EUREKA_HOST_SERVER $EUREKA_HOST_SERVER
 ENV CONFIG_SERVER_HOST $CONFIG_SERVER_HOST
 
-WORKDIR /usr/src/app
-COPY . .
-
-#RUN mvn clean install -P prod
-RUN mvn -f ./app-api/$PATH_FILE/ clean install
-
-################
-# Run APP API #
-################
-FROM openjdk:11
-ARG PATH_FILE
-VOLUME /tmp
-COPY --from=build "/usr/src/app/app-api/$PATH_FILE/target/*.jar" app.jar
+#WORKDIR /usr/src/app
+#RUN ECHO ${PATH_FILE}
+#COPY $PATH_FILE/* .
+COPY $PATH_FILE/target/*.jar app.jar
+#COPY --from=build "/usr/src/app/$PATH_FILE/target/*.jar" app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 

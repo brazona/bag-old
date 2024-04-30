@@ -10,20 +10,11 @@ README.md
 LICENSE
 .vscode
 
-app-api/api-gateway/target
-app-api/authentication/target
-app-api/authorization/target
-app-api/config-server/target
-app-api/eureka-server/target
-app-api/institutions/target
-app-api/profiles/target
-app-api/users/target
-
 app-ui/node
 app-ui/.vscode
-app-ui/dist
+#app-ui/dist
 app-ui/node_modules
-app-ui/target
+#app-ui/target
 app-ui/npm-debug.log
 app-ui/.angular
 app-ui/Dockerfile*
@@ -34,4 +25,4 @@ app-ui/.gitignore
 app-ui/README.md
 app-ui/deployment.yaml
 app-ui/.cache
-app-ui/src/assets/env.js
+#app-ui/src/assets/env.js

@@ -2,10 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>br.brazona</groupId>
-	<artifactId>bag</artifactId>
+	<artifactId>app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
 	<name>Business Administration Games - BAG </name>
 	<description>O aplicativo Business Administration Games ( BAG ), é um software capaz de simular relações de trabalho do ambiente corporativo com ênfase nos conceitos da Administração.O conteúdo tem carater educacional e oferece aos usuários a experiência de exercer funções ligadas a administração.</description>
 	<packaging>pom</packaging>
@@ -21,8 +19,65 @@
 		<spring-cloud.version>Hoxton.SR11</spring-cloud.version>
 	</properties>
 	<modules>
-		<!-- <module>app-api</module> -->
-		<module>app-ui</module>
 		<module>app-api</module>
+		<module>app-ui</module>
 	</modules>
+	<profiles>
+		<profile>
+			<id>default</id>
+			<properties>
+				<activeByDefault>true</activeByDefault>
+			</properties>
+		</profile>
+		<profile>
+			<id>local</id>
+			<build>
+				<plugins>
+					 <plugin>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.6.0</version>
+						<groupId>org.codehaus.mojo</groupId>
+						<executions>
+							<execution><!-- Run our version calculation script -->
+								<id>Renaming build artifacts</id>
+								<phase>package</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>bash</executable>
+									<commandlineArgs>scripts/local.sh</commandlineArgs>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>				
+			</build>
+		</profile>
+		<profile>
+			<id>dockercompose</id>
+			<build>
+				<plugins>
+					 <plugin>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.6.0</version>
+						<groupId>org.codehaus.mojo</groupId>
+						<executions>
+							<execution><!-- Run our version calculation script -->
+								<id>Renaming build artifacts</id>
+								<phase>package</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>bash</executable>
+									<commandlineArgs>scripts/docker-compose.sh</commandlineArgs>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>				
+			</build>
+		</profile>
+	</profiles>
 </project>

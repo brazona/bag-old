@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>br.brazona.bag</groupId>
-        <artifactId>bag-app-api</artifactId>
+        <groupId>br.brazona</groupId>
+        <artifactId>app-api</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>br.brazona.bag</groupId>
+    <groupId>br.brazona</groupId>
     <artifactId>authentication</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>authentication</name>
@@ -98,5 +98,23 @@
             </snapshots>
         </repository>
     </repositories>
-
+    <profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>default</spring.profiles.active>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

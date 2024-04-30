@@ -4,14 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>br.brazona</groupId>
-		<artifactId>bag</artifactId>
+		<artifactId>app</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>br.brazona.bag</groupId>
-	<artifactId>bag-app-api</artifactId>
+	<artifactId>app-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>bag-app-api</name>
+	<name>app-api</name>
 	<properties>
 		<springfox.version>2.7.0</springfox.version>
 	</properties>

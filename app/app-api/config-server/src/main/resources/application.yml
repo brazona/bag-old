@@ -1,5 +1,3 @@
-server:
-  port: ${CONFIG_SERVER_PORT}
 spring:
   application:
     name: config-server
@@ -7,6 +5,7 @@ spring:
     active: native
   cloud:
     config:
+      import: optional:file:.env[.properties]
       server:
         native:
           search-locations:
@@ -20,3 +19,6 @@ spring:
     user:
       name: ${SECURITY_NAME}
       password: ${SECURITY_PASS}
+server:
+  port: ${CONFIG_SERVER_PORT}
+  #port: 8888

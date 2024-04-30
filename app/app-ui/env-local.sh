@@ -11,6 +11,6 @@ do
   value='${'$varname'}'
   #sed -i 's/'$value'/'$varvalue'/' ./src/environments/environment.local.ts
   sed -i 's/'$value'/'$varvalue'/' ./src/assets/env.run-time.js  
-done < ../.resources/environments/.env
+done < ../../.resources/environments/.env
 envsubst < ./src/assets/env.run-time.js > ./src/assets/env.js
 rm -rf ./src/assets/env.run-time.js

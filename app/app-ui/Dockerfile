@@ -1,9 +1,8 @@
-#################
-# Maven Build App #
-#################
-FROM maven:3.8.4-eclipse-temurin-11 AS build  
-#
-# Defaults to production, docker-compose overrides this to development on build and run.
+################
+# Run in NGINX #
+################
+FROM nginx:latest
+
 ARG ENVIRONMENT
 ARG VERSION
 ARG API_GATEWAY_PORT
@@ -47,17 +46,11 @@ ENV PG_PASS_ADMIN $PG_PASS_ADMIN
 ENV SQL_USER_NAME_1 $SQL_USER_NAME_1
 ENV SQL_USER_NAME_2 $SQL_USER_NAME_2
 
-WORKDIR /usr/src/app
-COPY . .
-#RUN mvn clean install -P prod
-RUN mvn -f ./app-ui/ clean install -P prod
-################
-# Run in NGINX #
-################
-FROM nginx:latest
+#COPY nginx.conf /etc/nginx/conf.d/default.conf
+#COPY dist/app-ui/* /usr/share/nginx/html
 
-COPY --from=build /usr/src/app/app-ui/nginx.conf  /etc/nginx/conf.d/default.conf
-COPY --from=build /usr/src/app/app-ui/dist/app-ui /usr/share/nginx/html
+COPY nginx.conf  /etc/nginx/conf.d/default.conf
+COPY dist/app-ui /usr/share/nginx/html
 
 CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]
 # Expose port 80
