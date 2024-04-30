@@ -3,8 +3,7 @@ spring:
     name: eureka-server
   cloud:
     config:
-      #uri: http://${CONFIG_SERVER_HOST}:${CONFIG_SERVER_PORT}
-      uri: http://localhost:8888
+      uri: http://${CONFIG_SERVER_HOST}:${CONFIG_SERVER_PORT}
       fail-fast: true
       username: ${SECURITY_NAME}
       password: ${SECURITY_PASS}

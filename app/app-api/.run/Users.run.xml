@@ -1,10 +1,10 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Config Server" type="Application" factoryName="Application" folderName="app-api">
-    <option name="MAIN_CLASS_NAME" value="br.brazona.bag.configserver.ConfigServerApplication" />
-    <module name="config-server" />
+  <configuration default="false" name="Users" type="Application" factoryName="Application" folderName="app-api">
+    <option name="MAIN_CLASS_NAME" value="br.brazona.bag.users.UsersApplication" />
+    <module name="users" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="br.brazona.bag.configserver.*" />
+        <option name="PATTERN" value="c.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
@@ -16,7 +16,6 @@
       <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
       <ENTRIES>
         <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        <ENTRY IS_ENABLED="false" PARSER="env" IS_EXECUTABLE="false" PATH=".resources/environments/.env" />
         <ENTRY IS_ENABLED="true" PARSER="env" IS_EXECUTABLE="false" PATH="$PROJECT_DIR$/../.resources/environments/local.env" />
       </ENTRIES>
     </extension>
