@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run file_env && bash ./env-local.sh && ng serve -o",
+    "start-docker": "npm run file_env && bash ./env-local.sh dockercompose && ng serve -o",
     "build": "npm run file_env && ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",

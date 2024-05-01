@@ -198,7 +198,7 @@ services:
       - "${PG_HOST_SERVER_PORT_EXT}:5432"
     volumes:
       - bag_app_postgres:/var/lib/postgresql/data
-      - .resources/db/create_database.sql:/docker-entrypoint-initdb.d/create_database.sql
+      - ../.resources/db/create_database.sql:/docker-entrypoint-initdb.d/create_database.sql
   pg-db-server-admin:
     image: dpage/pgadmin4:latest
     container_name: pg-db-server-admin
