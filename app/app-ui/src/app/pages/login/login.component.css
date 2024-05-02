@@ -1,0 +1,200 @@
+body{
+  width: 100%;
+  height: 100%;
+}
+
+:root {
+    --verdeclaro: rgba(41, 255, 0, 1);
+    --amarelo: rgba(255, 255, 0, 1);
+    --cinzaescuro: rgba(0, 0, 0, 1);
+    --cinzaclaro: rgba(64, 64, 64, 1);
+    --branco: rgba(245, 245, 245, 1);
+    --verdeescuro: rgba(17, 67, 3, 1);
+    --russo-one-font-family: "Russo One", Helvetica;
+    --russo-one-font-weight: 400;
+    --russo-one-font-size: 20px;
+    --russo-one-letter-spacing: 0px;
+    --russo-one-line-height: normal;
+    --russo-one-font-style: normal;
+  }
+  
+.group {
+    background-color: #4c4a62;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .group .overlap-wrapper {
+    background-color: #4c4a62;
+    width: 1440px;
+    height: 1024px;
+  }
+  
+  .group .overlap {
+    position: relative;
+    height: 1024px;
+  }
+  
+  .group .rectangle-wrapper {
+    position: absolute;
+    width: 1440px;
+    height: 1024px;
+    top: 0;
+    left: 0;
+    background-image: url(../../../assets/background_login.png);
+    background-size: cover;
+    background-position: 50% 50%;
+  }
+  
+  .group .rectangle {
+    height: 1024px;
+    background-color: #11430391;
+  }
+  
+  .group .div {
+    position: absolute;
+    width: 484px;
+    height: 1024px;
+    top: 0;
+    left: 0;
+    background-color: #dadada1a;
+    transform: rotate(180deg);
+  }
+  
+  .group .group-wrapper {
+    position: absolute;
+    width: 374px;
+    height: 500px;
+    top: 262px;
+    left: 53px;
+  }
+  
+  .group .div-wrapper {
+    height: 500px;
+  }
+  
+  .group .div-2 {
+    position: relative;
+    width: 293px;
+    height: 245px;
+    top: 179px;
+    left: 44px;
+  }
+  
+  .group .overlap-group-wrapper {
+    position: absolute;
+    width: 290px;
+    height: 51px;
+    top: 194px;
+    left: 1px;
+  }
+  
+  .group .overlap-group {
+    position: relative;
+    width: 288px;
+    height: 51px;
+    background-color: var(--verdeescuro);
+    border-radius: 4px;
+  }
+  
+  .group .text-wrapper {
+    position: absolute;
+    width: 169px;
+    height: 19px;
+    top: 16px;
+    left: 59px;
+    font-family: var(--russo-one-font-family);
+    font-weight: var(--russo-one-font-weight);
+    color: var(--branco);
+    font-size: var(--russo-one-font-size);
+    text-align: center;
+    letter-spacing: var(--russo-one-letter-spacing);
+    line-height: var(--russo-one-line-height);
+    white-space: nowrap;
+    font-style: var(--russo-one-font-style);
+  }
+  
+  .group .img {
+    position: absolute;
+    width: 20px;
+    height: 18px;
+    top: 108px;
+    left: 267px;
+  }
+  
+  .group .text-wrapper-2 {
+    position: absolute;
+    width: 92px;
+    height: 26px;
+    top: 0;
+    left: 0;
+    font-family: var(--russo-one-font-family);
+    font-weight: var(--russo-one-font-weight);
+    color: #ffffff;
+    font-size: var(--russo-one-font-size);
+    letter-spacing: var(--russo-one-letter-spacing);
+    line-height: var(--russo-one-line-height);
+    font-style: var(--russo-one-font-style);
+  }
+  
+  .group .text-wrapper-3 {
+    position: absolute;
+    width: 68px;
+    height: 26px;
+    top: 97px;
+    left: 0;
+    font-family: var(--russo-one-font-family);
+    font-weight: var(--russo-one-font-weight);
+    color: #ffffff;
+    font-size: var(--russo-one-font-size);
+    letter-spacing: var(--russo-one-letter-spacing);
+    line-height: var(--russo-one-line-height);
+    font-style: var(--russo-one-font-style);
+  }
+  
+  .group .line {
+    top: 40px;
+    position: absolute;
+    width: 289px;
+    height: 1px;
+    left: 0;
+    object-fit: cover;
+  }
+  
+  .group .line-2 {
+    top: 140px;
+    position: absolute;
+    width: 289px;
+    height: 1px;
+    left: 0;
+    object-fit: cover;
+  }
+  
+  .group .person {
+    position: absolute;
+    width: 24px;
+    height: 25px;
+    top: 1px;
+    left: 265px;
+  }
+  
+  .group .rectangle-2 {
+    position: absolute;
+    width: 1px;
+    height: 1024px;
+    top: 0;
+    left: 484px;
+    background: linear-gradient(180deg, rgb(255, 255, 0) 0%, rgb(41, 255, 0) 100%);
+  }
+  
+  .group .img-2 {
+    position: absolute;
+    width: 319px;
+    height: 104px;
+    top: 262px;
+    left: 81px;
+    object-fit: cover;
+  }
+  
