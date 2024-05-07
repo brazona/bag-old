@@ -5,10 +5,9 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background-color: aqua;
-  width: 1610px;
+  width: 1024px;
   height: 768px;
 }
-html, body { height: 100%; }
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 

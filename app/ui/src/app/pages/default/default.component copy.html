@@ -1,0 +1,60 @@
+
+    <div class="body">
+        <div class="header">
+            <mat-grid-list cols="12" rows = "2">
+                <mat-grid-tile></mat-grid-tile>
+                <mat-grid-tile colspan="2" rowspan="2" class="logo">
+                    <div class="mat-grid-tile">
+                        <img src="../../../assets/logo.png"/>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile></mat-grid-tile>
+                <mat-grid-tile colspan="5" rowspan="1">
+                    <div class="text">
+                        <div class="logotext">
+                            BUSINESS ADMINISTRATION GAMES
+                        </div>
+                        <div class="navbar">
+                            <ul>
+                                <li><a>HOME</a></li>
+                                <li><a>TUTORIAIS</a></li>
+                                <li><a>CONTATOS</a></li>
+                            </ul>
+                        </div>         
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile></mat-grid-tile>
+                <mat-grid-tile colspan="2" rowspan="1">
+                    <div class="social">
+                        <div class="social-networks">
+                            <div class="icons">
+                                <img src="../../../assets/icon-youtube.png" />
+                            </div>
+                            <div class="icons">
+                                <img src="../../../assets/icon-github.png" />
+                            </div>
+                            <div class="icons">
+                                <img src="../../../assets/icon-linkedin.png" />
+                            </div>
+                        </div>
+                        <div class="system-access">
+                            <button mat-raised-button id="buttom-system" (click)="page_login()">ACESSE O SISTEMA</button>
+                        </div>         
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+        <div class="footer">
+            
+            <div class="footer-item footer-environment">
+                AMBIENTE :<span>{{environment}}</span>
+            </div>
+            <div class="text-footer footer-item">
+                BRAZONA TECH ©
+            </div>
+            <div class="version-footer footer-item">
+                <img src="../../../assets/versao 1.png"/> {{version}}
+            </div>
+        </div>
+    </div>
+
