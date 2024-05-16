@@ -6,15 +6,13 @@ import { HomeComponent } from './pages/home/home.component';
 import { coreGuard } from './core/guards/core.guard';
 import { LoginComponent } from './pages/login/login.component';
 import { ExampleComponent } from './pages/example/example.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 
 const routes: Routes = [
 
   { path: 'default', component: DefaultComponent },
   { path: 'login', component: LoginComponent  },
-  { path: 'example', component: ExampleComponent  },  
-  { path: 'dashboard', component: DashboardComponent  },  
+  { path: 'example', component: ExampleComponent  },   
   { path: 'home', component: HomeComponent,
         canActivate: [coreGuard] 
     },

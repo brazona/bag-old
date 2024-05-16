@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DefaultComponent } from './default/default.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 
 @NgModule({
@@ -15,7 +15,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     CommonModule,
     DefaultComponent,
     LoginComponent,
-    DashboardComponent,
   ]
 })
 
