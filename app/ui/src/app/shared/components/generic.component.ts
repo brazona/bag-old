@@ -1,6 +1,10 @@
 import { BreakpointObserver, BreakpointState, Breakpoints } from "@angular/cdk/layout";
-import { Injectable, OnDestroy, OnInit} from "@angular/core";
-import { Subject, takeUntil } from "rxjs";
+import { Injectable, OnDestroy, OnInit, OnChanges, SimpleChanges} from "@angular/core";
+import { Observable, Subject, takeUntil } from "rxjs";
+import { ScreenSize } from "../constants/screensize";
+import { query } from "@angular/animations";
+import { IScreenSize } from "../interfaces/constants/screensize";
+
 
 
 
@@ -11,7 +15,10 @@ import { Subject, takeUntil } from "rxjs";
 export abstract class GenericComponent implements OnInit, OnDestroy{
 
     destroyed = new Subject<void>();
-    currentScreenSize: string = '';
+    //currentScreenSize: Object = new Object;
+    currentScreenSize: IScreenSize = {id: '', size: '', type_screen: 0};
+    currentBreakpoints: string = "";
+    isHandPortrait: boolean = false;
     
     // Create a map to display breakpoint names for demonstration purposes.
     displayNameMap = new Map([
@@ -23,17 +30,8 @@ export abstract class GenericComponent implements OnInit, OnDestroy{
     ]);
     constructor(public responsive: BreakpointObserver) {    
     }
-    
     ngOnInit() {
-        this.responsive
-        .observe([Breakpoints.HandsetPortrait])
-        .subscribe((state: BreakpointState) => {
-            if (state.matches) {
-                console.log(
-                'This is the Handset Portrait point at max-width: 599.98 px and portrait orientation.'
-                );
-            }
-        });
+        
         this.responsive
         .observe([
             Breakpoints.XSmall,
@@ -46,14 +44,19 @@ export abstract class GenericComponent implements OnInit, OnDestroy{
         .subscribe(result => {
             for (const query of Object.keys(result.breakpoints)) {
                 if (result.breakpoints[query]) {
-                    this.currentScreenSize = this.displayNameMap.get(query) ??  'Unknown';
-                    console.log(this.currentScreenSize)
-
-                    
+                    this.currentBreakpoints = query.toString();
                 }
             }
+
+            Array.from(ScreenSize.entries()).forEach(
+                entry =>  { 
+                    if (entry[1].id.includes(this.currentBreakpoints)){
+                            this.currentScreenSize = entry[1];
+                        }
+                    }
+            );    
         });
-        
+           
     }
 
     ngOnDestroy() {

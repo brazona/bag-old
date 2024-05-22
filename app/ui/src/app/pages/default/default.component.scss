@@ -1,116 +1,35 @@
-.body{
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    background: url(../../../assets/img-background.png), lightgray 50% / cover no-repeat;
-}
+
+@import '../../../styles/global/color_palette';
+
 .header{
-    position: fixed;
+    background-color: $dark_green_transp;
+    position: relative;
     top:0;
     left: 0;
     width: 100%;
-    height: 20%;
+    height: 15%;
     flex-shrink: 0;
     border-radius: 2px;
-    background: rgba(17, 67, 3, 0.67);
 }
-mat-grid-tile{
-    justify-content: center;
-    align-items: center;
+.logotype {
+    width: 60%;
 }
-mat-grid-tile img{
-    width: 100%;
-    height: 100%;
+#logotype-large {
+    margin-top: 30%;
+    max-width: 50%;
+    object-fit: fill;
 }
-.mat-grid-tile{
-    width: 90%;
-    height: auto;
+#logotype-small {
+    margin-top: 20%;
+    max-width: 50%;
+    object-fit: fill;
 }
-.text, .social{
-    height: 100%;
-    width: 100%;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;    
-}
-.navbar{
-    width: 90%;
-    height: 30%;
-    line-height: 200%;
-}
-.logotext{
-    width: 100%;
-    height: 50%;
-    margin-top: 5%;
-    color: #FFF;
-    font-family: Russo One;
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-ul li a {
-    margin-right: 10px;
-    color: #FFF;
-    font-family: Russo One;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    text-decoration: none;
-
-}
-ul {
-    display:inline;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-ul li {
-    display:inline;
-}
-.social-networks{
-    width: 100%;
-    height: 60%;
-}
-.system-access{
-    width: 100%;
-    height: 40%;
-}
-#buttom-system{
-    width: 195px;
-    height: 31.339px;
-    background-color: rgba(17, 67, 3, 1) ;
-    color: #FFF;
-    font-family: Russo One;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    border-radius: 8px;
-    padding: 5px;
-    margin: 5px;
-}
-.system-access, .social-networks, .footer{
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.icons{
-    width: 50px;
-    height: 50px;
-    margin-left: 15px;
-}
-.icons img{
-    width: 100%;
-    height: 100%;
+.body{
+    height: 75%;
+    position: relative;
 }
 .footer{
+    background-color: $dark_green_transp;
     position:fixed;
     bottom:0;
     left: 0;
@@ -118,55 +37,15 @@ ul li {
     height: 10%;
     flex-shrink: 0;
     border-radius: 2px;
-    background: rgba(17, 67, 3, 0.67);
 }
-.footer-item{
-    width: 33%;
+.grid-container {
+    background-image: url(../../../assets/img-background.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
     height: 100%;
-}
-.text-footer{
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     justify-content: center;
-}
-.footer-environment{
     align-items: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: left;
-}
-.footer-environment span{
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: left;
-    margin-left: 5px;
-    background-color: rgba(17, 67, 3, 1) ;
-    padding: 10px;
-    border-radius: 8px;
-    text-transform: uppercase;
-}
-.version-footer{
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: right;
-    padding-right: 10px;
-}
-.text-footer, .version-footer, .footer-environment{
-    color: #FFF;
-    font-family: Russo One;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-.content, .section{
-    margin: 0%;
-    padding: 0%;
-}
+    margin: 0;
+    bottom: 0;
+  }
