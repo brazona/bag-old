@@ -1,7 +1,7 @@
 
 <div class="grid-container">
     <div class="header">
-        <div class="content" fxLayout="row" fxFlexFill fxLayoutAlign="center center">
+        <div class="header-container" fxLayout="row" fxFlexFill fxLayoutAlign="center center">
             <div fxFlex="25" class="logotype" fxLayout="row" fxLayout.xs="row" fxLayout.sm="row" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
                 <div *ngIf="currentScreenSize.type_screen == 3 ;then logotype_large else logotype_small"></div>
                 <ng-template #logotype_large>
@@ -34,7 +34,7 @@
     </div>
     <div class="body">
         BODY
-        <div class="content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutAlign="start center">
+        <div class="body-container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutAlign="start center">
         </div>
     </div>
     <div class="footer">
