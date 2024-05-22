@@ -2,7 +2,7 @@
 <div class="grid-container">
     <div class="header">
         <div class="header-container" fxLayout="row" fxFlexFill fxLayoutAlign="center center">
-            <div fxFlex="25" class="logotype" fxLayout="row" fxLayout.xs="row" fxLayout.sm="row" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+            <div fxFlex="25" class="header-logotype" fxLayout="row" fxLayout.xs="row" fxLayout.sm="row" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
                 <div *ngIf="currentScreenSize.type_screen == 3 ;then logotype_large else logotype_small"></div>
                 <ng-template #logotype_large>
                     <img id="logotype-large" mat-card-image class="img" src="../../../assets/logo.png">
@@ -11,12 +11,32 @@
                     <img id="logotype-small" mat-card-image class="img" src="../../../assets/logo.png">
                 </ng-template>
             </div>
-            <div fxFlex="60" class="title" fxFlex.xs="34" fxFlex.sm="34" fxLayout.xs="column" fxLayout.sm="column">
-                <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
-                    BUSINESS ADMINISTRATION GAMES
+            <div fxFlex="60" class="header-title" fxFlex.xs="34" fxFlex.sm="34" fxLayout.xs="column" fxLayout.sm="column">
+                <div class="header-logomarca" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+                    <div *ngIf="currentScreenSize.type_screen == 3 ;then logomarca_large else logomarca_small"></div>
+                    <ng-template #logomarca_large>
+                        <h1>BUSINESS ADMINISTRATION GAMES</h1>
+                    </ng-template>
+                    <ng-template #logomarca_small> 
+                        <h4>BUSINESS ADMINISTRATION GAMES</h4>
+                    </ng-template>
                 </div>
-                <div class="content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutAlign="center">
-                    <div fxFlex="33" fxFlex.xs="33" fxFlex.sm="33">
+                <div class="header-sidebar" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutAlign="center">
+                    <div class="header-sidebar-container">
+                        <div *ngIf="currentScreenSize.type_screen == 3 ;then sidebar_large else sidebar_small"></div>
+                        <ng-template #sidebar_large>
+                            <ul>
+                                <li><a>HOME</a></li>
+                                <li><a>TUTORIAIS</a></li>
+                                <li><a>CONTATOS</a></li>
+                            </ul>
+                        </ng-template>
+                        <ng-template #sidebar_small> 
+                            sidebar_small
+                        </ng-template>
+                    </div>                    
+                    
+                    <!-- <div fxFlex="33" fxFlex.xs="33" fxFlex.sm="33">
                         HOME
                     </div> 
                     <div fxFlex="33" fxFlex.xs="33" fxFlex.sm="33">
@@ -24,10 +44,10 @@
                     </div> 
                     <div fxFlex="33" fxFlex.xs="33" fxFlex.sm="33">
                         CONTATOS
-                    </div> 
+                    </div>  -->
                 </div>
             </div>
-            <div fxFlex="15" class="network" fxFlex.xs="33" fxFlex.sm="33">
+            <div fxFlex="15" class="header-network" fxFlex.xs="33" fxFlex.sm="33">
                 network
             </div> 
         </div>
