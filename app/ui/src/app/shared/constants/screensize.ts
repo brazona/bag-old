@@ -3,13 +3,13 @@ import { IScreenSize } from 'src/app/shared/interfaces/constants/screensize';
 
 export const ScreenSize: IScreenSize[] = [ 
     {
-        id: Breakpoints.Small,
-        size: "Small",
-        type_screen: 1
-    },
-    {
         id: Breakpoints.XSmall,
         size: "XSmall",
+        type_screen: 0
+    },
+    {
+        id: Breakpoints.Small,
+        size: "Small",
         type_screen: 1
     },
     {

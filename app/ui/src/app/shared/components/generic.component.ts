@@ -47,8 +47,9 @@ export abstract class GenericComponent implements OnInit, OnDestroy{
                     this.currentBreakpoints = query.toString();
                 }
             }
-
+            console.log(this.currentScreenSize);
             Array.from(ScreenSize.entries()).forEach(
+                
                 entry =>  { 
                     if (entry[1].id.includes(this.currentBreakpoints)){
                             this.currentScreenSize = entry[1];
