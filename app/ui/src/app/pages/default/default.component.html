@@ -1,68 +1,90 @@
-
-<div class="grid-container">
-    <div class="header">
-        <div class="header-container" fxLayout="row" fxFlexFill fxLayoutAlign="center center">
-            <div class="header-logotype" fxLayout="row" fxFlex="25" fxLayout.xs="row" fxFlex.xs="25" fxLayout.sm="row" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
-                <div *ngIf="currentScreenSize.type_screen == 3 ;then logotype_large else logotype_small"></div>
-                <ng-template #logotype_large>
-                    <img id="logotype-large" mat-card-image class="img" src="../../../assets/logo.png">
-                </ng-template>
-                <ng-template #logotype_small> 
-                    <img id="logotype-small" mat-card-image class="img" src="../../../assets/logo.png">
-                </ng-template>
-            </div>
-            <div class="header-title" fxLayout="column" fxFlex="60" fxLayout.xs="column" fxFlex.xs="50" fxLayout.sm="column" fxFlex.sm="55">
-                <div class="header-logomarca" fxLayout="row" fxLayout.xs="column" fxFlex.xs="70" fxLayout.sm="column" fxFlex.sm="70" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
-                    <div *ngIf="currentScreenSize.type_screen == 3">
-                        <h1>BUSINESS ADMINISTRATION GAMES</h1>
-                    </div>
-                    <div *ngIf="currentScreenSize.type_screen == 2">
-                        <h2>BUSINESS ADMINISTRATION GAMES</h2>
-                    </div>
-                    <div *ngIf="currentScreenSize.type_screen == 1" >
-                        <h3>BUSINESS ADMINISTRATION GAMES</h3>
-                    </div>
-                    <div *ngIf="currentScreenSize.type_screen == 0" >
-                        <h4>BUSINESS ADMINISTRATION GAMES</h4>
-                    </div>
+<div class="page" fxLayout="column">
+    <div class="header" fxLayout="row" fxFlex="15">
+        <div class="header-logo" fxFlex="25">
+            <img id="logotype-large" mat-card-image class="img" src="../../../assets/logo.png">
+        </div>
+        <div class="header-content" fxFlex="55" fxLayout="column">
+            <div class="header-content-title" fxFlex="55">
+               <div *ngIf="currentScreenSize.type_screen == 3">
+                    <h1>BUSINESS ADMINISTRATION GAMES</h1>
                 </div>
-                <div class="header-sidebar" fxLayout="row" fxFlex="15" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutAlign="center">
-                    <div class="header-sidebar-container">
-                        <div *ngIf="currentScreenSize.type_screen == 3 ;then sidebar_large else sidebar_small"></div>
-                        <ng-template #sidebar_large>
-                            <ul>
-                                <li><a>HOME</a></li>
-                                <li><a>TUTORIAIS</a></li>
-                                <li><a>CONTATOS</a></li>
-                            </ul>
-                        </ng-template>
-                        <ng-template #sidebar_small> 
-                            sidebar_small
-                        </ng-template>
-                    </div>                    
-                    
-                    <!-- <div fxFlex="33" fxFlex.xs="33" fxFlex.sm="33">
-                        HOME
-                    </div> 
-                    <div fxFlex="33" fxFlex.xs="33" fxFlex.sm="33">
-                        TUTORIAIS
-                    </div> 
-                    <div fxFlex="33" fxFlex.xs="33" fxFlex.sm="33">
-                        CONTATOS
-                    </div>  -->
+                <div *ngIf="currentScreenSize.type_screen == 2">
+                    <h2>BUSINESS ADMINISTRATION GAMES</h2>
+                </div>
+                <div *ngIf="currentScreenSize.type_screen == 1" >
+                    <h3>BUSINESS ADMINISTRATION GAMES</h3>
+                </div>
+                <div *ngIf="currentScreenSize.type_screen == 0" >
+                    <h4>BUSINESS ADMINISTRATION GAMES</h4>
                 </div>
             </div>
-            <div class="header-network" fxLayout="row" fxFlex="15" fxLayout.xs="row" fxFlex.xs="25" fxLayout.sm="column" fxFlex.sm="20">
-                network {{currentScreenSize.type_screen}} <br/> {{currentScreenSize.size}}
-            </div> 
+            <div class="header-content-navbar" fxFlex="55" fxLayout="column">
+                <div class="header-sidebar-large" *ngIf="currentScreenSize.type_screen == 3">
+                    <ul>
+                        <li *ngFor="let sidebarItem of sidebarList">
+                          <a>{{ sidebarItem }}</a>
+                        </li>
+                      </ul>
+                </div>
+                <div class="header-sidebar-medium" *ngIf="currentScreenSize.type_screen == 2">
+                    <ul>
+                        <li *ngFor="let sidebarItem of sidebarList">
+                          <a>{{ sidebarItem }}</a>
+                        </li>
+                      </ul>
+                </div>
+                <div class="header-sidebar-small" *ngIf="currentScreenSize.type_screen == 1" >
+                    <ul>
+                        <li *ngFor="let sidebarItem of sidebarList">
+                          <a>{{ sidebarItem }}</a>
+                        </li>
+                      </ul>
+                </div>
+            </div>
+        </div>
+        <div class="header-network" fxFlex="20" fxLayout="column" fxLayout.xs="column" fxFlex.xs="25" fxLayout.sm="column" fxFlex.sm="25">
+            <div *ngIf="currentScreenSize.type_screen == 0 ;then header_network_small else header_network_large"></div>
+            <ng-template #header_network_large>
+                    <div class="header_network_large" fxFlex="100">
+                        network {{currentScreenSize.type_screen}} <br/> {{currentScreenSize.size}}
+                    </div>
+            </ng-template>
+            <ng-template #header_network_small >
+                <div class="header_network_large_small" fxFlex.xs="55">
+                    network
+                </div>
+                <div class="header_network_small" fxFlex.xs="55">
+                    <mat-toolbar class="button-sidebar">
+                        <mat-toolbar-row>
+                          <button mat-icon-button class="example-icon" aria-label="Menu" (click)="menuSidebar()">
+                            <mat-icon>menu</mat-icon>
+                          </button>
+                        </mat-toolbar-row>
+                    </mat-toolbar>    
+                </div>
+            </ng-template>
         </div>
     </div>
-    <div class="body">
-        BODY
-        <div class="body-container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutAlign="start center">
-        </div>
+    <div class="content" fxLayout="row" fxFlex="75">
+        <div *ngIf="currentScreenSize.type_screen == 0 ;then screen_small else screen_large"></div>
+            <ng-template #screen_large>
+                <div class="content-body" fxFlex="100">
+                    content
+                </div>
+            </ng-template>
+            <ng-template #screen_small> 
+                <div class="content-body" fxFlex="85">
+                    content
+                </div>
+                <div class="sidebar" fxFlex="15" [hidden]="sidebarExpan">
+                    sidebar
+                </div>
+            </ng-template>
     </div>
-    <div class="footer">
-        FOOTER
+    <div class="footer" fxLayout="row" fxFlex="10">
+        footer
+        <span>screen type: {{currentScreenSize.type_screen}}</span> <br/> <span>screen type code:{{currentScreenSize.size}}</span> 
     </div>
 </div>
+
+

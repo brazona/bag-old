@@ -2,88 +2,41 @@
 @import '../../../styles/global/color_palette';
 @import '../../../styles/global/typography';
 
-.header{
-    background-color: $dark_green_transp;
-    position: relative;
-    top:0;
-    left: 0;
+.page {
+    height: 100%;
     width: 100%;
-    height: 15%;
-    flex-shrink: 0;
-    border-radius: 2px;
+    background-image: url(../../../assets/img-background.png);
+    background-size: cover;
+    background-repeat: no-repeat;
 }
-.header-logotype {
-    width: 60%;
+.header {
+    background-color: $dark_green_transp;
 }
 #logotype-large {
-    margin-top: 30%;
-    max-width: 50%;
-    object-fit: fill;
+    max-width: 60%;
+    height: auto;
+    margin-left: 17%;
+    margin-top: 3%;
 }
-#logotype-small {
-    margin-top: 20%;
-    max-width: 50%;
-    object-fit: fill;
+.header-content {
+    //background-color: yellowgreen;
+    padding-top: 5px;
 }
-.header-title {
-    margin-top: 1%;
-}
-.header-logomarca {
-    margin-bottom: 1%;
-}
-.header-logomarca h1 {
-    margin-right: 10px;
+.header-content-title h1, h2, h3, h4 {
     color: $font_color;
     font-family: $font;
-    font-size: 36px;
     font-style: normal;
-    //font-weight: 100;
-    font-weight: bold;
-    line-height: normal;
-    text-decoration: none;
-    text-align: left;
-}
-.header-logomarca h2 {
-    margin-right: 10px;
-    color: $font_color;
-    font-family: $font;
-    font-size: 26px;
-    font-style: normal;
-    //font-weight: 100;
-    font-weight: bold;
-    line-height: normal;
-    text-decoration: none;
-    text-align: left;
-}
-.header-logomarca h3 {
-    margin-right: 10px;
-    color: $font_color;
-    font-family: $font;
-    font-size: 16px;
-    font-style: normal;
-    //font-weight: 100;
-    font-weight: bold;
-    line-height: normal;
-    text-decoration: none;
-    text-align: left;
-}
-.header-logomarca h4 {
-    margin-right: 10px;
-    color: $font_color;
-    font-family: $font;
-    font-size: 12px;
-    font-style: normal;
-    //font-weight: 100;
-    font-weight: bold;
     line-height: normal;
     text-decoration: none;
     text-align: center;
 }
-.header-sidebar-container {
-    max-width: 50%;
-    margin-right: 35%;   
+.header-content-title h1 {
+    font-size: 36px;
 }
-.header-sidebar ul li a {
+.header-content-title h3 {
+    font-size: 20px;
+}
+.header-sidebar-large ul li a {
     margin-right: 10px;
     color: $font_color;
     font-family: $font;
@@ -93,42 +46,63 @@
     text-decoration: none;
     text-align: left;
 }
-.header-sidebar ul {
+.header-sidebar-medium ul li a {
+    margin-right: 10px;
+    color: $font_color;
+    font-family: $font;
+    font-size: 16px;
+    font-style: normal;
+    line-height: normal;
+    text-decoration: none;
+    text-align: left;
+}
+.header-sidebar-small ul li a {
+    margin-right: 10px;
+    color: $font_color;
+    font-family: $font;
+    font-size: 16px;
+    font-style: normal;
+    line-height: normal;
+    text-decoration: none;
+    text-align: left;
+}    
+.header-content-navbar ul {
     display:inline;
     list-style-type: none;
     margin: 0;
-    padding: 0;
-    
+    padding: 0;   
 }
-.header-sidebar ul li {
+.header-content-navbar ul li {
     display:inline;
 }
-.header-network {
-    background-color: crimson;
-    min-height: 100%;
-}
-.body{
-    height: 75%;
-    position: relative;
-}
-.footer{
-    background-color: $dark_green_transp;
-    position:fixed;
-    bottom:0;
-    left: 0;
-    width: 100%;
-    height: 10%;
-    flex-shrink: 0;
-    border-radius: 2px;
-}
-.grid-container {
-    background-image: url(../../../assets/img-background.png);
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 100%;
+.header-content-navbar {
+    margin-top: 1%;
+    text-align: left;
+    margin-left: 60px;
     height: 100%;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    bottom: 0;
-  }
+}
+.button-sidebar{
+    //color: inherit;
+    background-color: inherit;
+}
+.header_network_small {
+    //background-color: gray;
+}
+.header_network_large {
+    //background-color: red;
+}
+.header_network_large_small {
+    //background-color: blue;
+}
+.header_network_small mat-toolbar{
+    //background-color: aqua;
+}
+.sidebar {
+    //background-color: red;
+}
+// .content {
+//     background-color: blue;
+// }
+.footer {
+    //background-color: blueviolet;
+}

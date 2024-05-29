@@ -8,7 +8,9 @@ import { GenericComponent } from 'src/app/shared/components/generic.component';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import { IScreenSize } from 'src/app/shared/interfaces/constants/screensize';
+import {MatIconModule} from '@angular/material/icon';
+
+
 
 
 
@@ -22,12 +24,15 @@ import { IScreenSize } from 'src/app/shared/interfaces/constants/screensize';
     MatButtonModule, 
     FlexLayoutModule, 
     MatToolbarModule,
-    CommonModule
+    CommonModule,
+    MatIconModule
   ],
 })
 export class DefaultComponent extends GenericComponent{
  version:string = environment.VERSION; 
  environment:any = environment.ENVIRONMENT;
+ sidebarList: string[] = ["HOME", "TUTORIAIS", "CONTATOS"]
+ sidebarExpan: boolean = true;
   constructor(
     public router: Router, responsive: BreakpointObserver  
     ) { 
@@ -35,5 +40,11 @@ export class DefaultComponent extends GenericComponent{
   }
   page_login(){
     this.router.navigate(['/login']);
+  }
+  menuSidebar(){
+    if(this.currentScreenSize.type_screen != 0){
+      return;
+    }
+    this.sidebarExpan = !this.sidebarExpan; 
   }
 }
