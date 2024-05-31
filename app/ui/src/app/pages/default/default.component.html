@@ -43,26 +43,35 @@
             </div>
         </div>
         <div class="header-network" fxFlex="20" fxLayout="column" fxLayout.xs="column" fxFlex.xs="25" fxLayout.sm="column" fxFlex.sm="25">
-            <div *ngIf="currentScreenSize.type_screen == 0 ;then header_network_small else header_network_large"></div>
-            <ng-template #header_network_large>
-                    <div class="header_network_large" fxFlex="100">
-                        network {{currentScreenSize.type_screen}} <br/> {{currentScreenSize.size}}
+            <div class="header-network-content" fxFlex="100" fxLayout="column">
+                <div class="header_network_icon" fxLayout="row" fxFlex="100" fxLayoutAlign="center center">
+                    <div>
+                        <img src="../../../assets/icon-youtube.png"/>
                     </div>
-            </ng-template>
-            <ng-template #header_network_small >
-                <div class="header_network_large_small" fxFlex.xs="55">
-                    network
+                    <div>
+                        <img src="../../../assets/icon-github.png"/>
+                    </div>
+                    <div>
+                        <img src="../../../assets/icon-linkedin.png"/>
+                    </div>
                 </div>
-                <div class="header_network_small" fxFlex.xs="55">
-                    <mat-toolbar class="button-sidebar">
-                        <mat-toolbar-row>
-                          <button mat-icon-button class="example-icon" aria-label="Menu" (click)="menuSidebar()">
-                            <mat-icon>menu</mat-icon>
-                          </button>
-                        </mat-toolbar-row>
-                    </mat-toolbar>    
+                <div class="header_network_access_system" fxLayout="row" fxFlex="100">
+                    <div *ngIf="currentScreenSize.type_screen == 0 ;then header_network_access_system_small else header_network_access_system_large"></div>
+                    <ng-template #header_network_access_system_large>
+                        <button mat-flat-button>ACESSE O SITEMA</button>
+                    </ng-template>
+                    <ng-template #header_network_access_system_small>
+                        <mat-toolbar class="header_network_access_system_small_button-sidebar">
+                            <mat-toolbar-row>
+                                <button mat-icon-button aria-label="Menu" (click)="menuSidebar()">
+                                    <mat-icon>menu</mat-icon>
+                                </button>
+                            </mat-toolbar-row>
+                        </mat-toolbar>
+                    </ng-template>
                 </div>
-            </ng-template>
+                
+            </div>
         </div>
     </div>
     <div class="content" fxLayout="row" fxFlex="75">
