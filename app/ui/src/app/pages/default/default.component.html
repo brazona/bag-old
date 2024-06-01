@@ -57,8 +57,8 @@
                 </div>
                 <div class="header_network_access_system" fxLayout="row" fxFlex="100">
                     <div *ngIf="currentScreenSize.type_screen == 0 ;then header_network_access_system_small else header_network_access_system_large"></div>
-                    <ng-template #header_network_access_system_large>
-                        <button mat-flat-button>ACESSE O SITEMA</button>
+                    <ng-template #header_network_access_system_large class="header_network_access_system_large">
+                        <button id="header_network_access_system_large_buttom" mat-flat-button>ACESSE O SITEMA</button>
                     </ng-template>
                     <ng-template #header_network_access_system_small>
                         <mat-toolbar class="header_network_access_system_small_button-sidebar">
@@ -75,6 +75,9 @@
         </div>
     </div>
     <div class="content" fxLayout="row" fxFlex="75">
+        type screen: {{currentScreenSize.type_screen}} <br>
+        id: {{currentScreenSize.id}} <br>
+        size: {{currentScreenSize.size}}
         <div *ngIf="currentScreenSize.type_screen == 0 ;then screen_small else screen_large"></div>
             <ng-template #screen_large>
                 <div class="content-body" fxFlex="100">
@@ -83,7 +86,6 @@
             </ng-template>
             <ng-template #screen_small> 
                 <div class="content-body" fxFlex="85">
-                    content
                 </div>
                 <div class="sidebar" fxFlex="15" [hidden]="sidebarExpan">
                     sidebar

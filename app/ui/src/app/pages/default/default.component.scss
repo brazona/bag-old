@@ -83,12 +83,12 @@
 
 .header-network {
     max-width: 70%;
-    background-color: black;
+    //background-color: black;
     align-items: center;
 }
 .header-network-content {
     max-width: 80%;
-    background-color: blueviolet;
+    //background-color: blueviolet;
 }
 .header_network_icon {
     background-color: aqua;
@@ -104,25 +104,28 @@
     margin-right: 10px;
     width: 33%;
 }
-#button-access-system {
-    background-color: $dark_green_transp;
-    margin: 2%;
+
+.header_network_access_system {
+    background-color: yellow;
+    align-items: center;
+}
+#header_network_access_system_large_buttom {
+    background-color: $dark_green;
+    //margin: 2%;
     color: $font_color;
     font-family: $font;
     font-size: 16px;
     text-align: center;
     padding: 2%;
-    max-width: 80%;
-}
-.header_network_access_system {
-    background-color: yellow;
-    align-items: center;
+    width: 100%;
+    //max-width: 100%;
+    //border-radius: 8px;
 }
 .header_network_access_system_small_button-sidebar mat-toolbar-row {
     background-color: red;
     max-width: 100%;
 }
 .header_network_access_system_small_button-sidebar mat-toolbar-row button{
-    //background-color: pink;
+    background-color: pink;
     margin-left: 50%;
 }
