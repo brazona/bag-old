@@ -77,10 +77,21 @@
             </div>
         </div>
     </div>
-    <div class="content" fxLayout="row" fxFlex="75">
-        type screen: {{currentScreenSize.type_screen}} <br>
+    <div class="body" fxLayout="row" fxFlex="75">
+        <div class="body_content" fxLayout="row" fxFlex="100" fxLayout.xs="column" fxFlex.xs="85">
+            <div class="body_content_left" fxFlex = "40" fxFlex.xs="15">
+                body_content_left
+            </div>
+            <div class="body_content_rigth" fxFlex="60" fxFlex.xs="85">
+                body_content_rigth
+            </div>
+        </div>
+        <div class="body_content_sidebar" fxFlex="15" [hidden]="sidebarExpan">
+            sidebar
+        </div>
+        <!-- type screen: {{currentScreenSize.type_screen}} <br>
         id: {{currentScreenSize.id}} <br>
-        size: {{currentScreenSize.size}}
+        size: {{currentScreenSize.size}} 
         <div *ngIf="currentScreenSize.type_screen == 0 ;then screen_small else screen_large"></div>
             <ng-template #screen_large>
                 <div class="content-body" fxFlex="100">
@@ -93,7 +104,7 @@
                 <div class="sidebar" fxFlex="15" [hidden]="sidebarExpan">
                     sidebar
                 </div>
-            </ng-template>
+            </ng-template> -->
     </div>
     <div class="footer" fxLayout="row" fxFlex="10">
         footer

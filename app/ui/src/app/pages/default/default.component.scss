@@ -17,6 +17,7 @@
     height: auto;
     margin-left: 17%;
     margin-top: 3%;
+    object-fit: cover;
 }
 .header-content {
     padding-top: 5px;
@@ -123,4 +124,21 @@
 }
 .header_network_access_system_small_button-sidebar mat-toolbar-row button:hover {  
     color: $dark_green;
+}
+.body {
+    //background-color: transparent;
+}
+.body_content_sidebar {
+    background-color: aqua;
+}
+.body_content {
+    //background-color: black;
+    //padding: 3%;
+    margin-top: 5%;
+}
+.body_content_left {
+    //background-color: whitesmoke;
+}
+.body_content_rigth {
+    background-color: $dark_green_transp;
 }
