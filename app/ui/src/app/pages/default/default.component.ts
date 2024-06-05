@@ -31,7 +31,12 @@ import {MatIconModule} from '@angular/material/icon';
 export class DefaultComponent extends GenericComponent{
  version:string = environment.VERSION; 
  environment:any = environment.ENVIRONMENT;
- sidebarList: string[] = ["HOME", "TUTORIAIS", "CONTATOS"]
+ sidebarList: string[] = ["TUTORIAIS", "CONTATOS"]
+
+ url_github: string = "https://github.com/session";
+ url_linkedin: string = "https://br.linkedin.com";
+ url_youtube: string = "https://www.youtube.com/";
+
  sidebarExpan: boolean = true;
   constructor(
     public router: Router, responsive: BreakpointObserver  

@@ -12,7 +12,7 @@
                     <h2>BUSINESS ADMINISTRATION GAMES</h2>
                 </div>
                 <div *ngIf="currentScreenSize.type_screen == 1" >
-                    <h3>BUSINESS ADMINISTRATION GAMES</h3>
+                    <h4>BUSINESS ADMINISTRATION GAMES</h4>
                 </div>
                 <div *ngIf="currentScreenSize.type_screen == 0" >
                     <h4>BUSINESS ADMINISTRATION GAMES</h4>
@@ -46,13 +46,16 @@
             <div class="header-network-content" fxFlex="100" fxLayout="column">
                 <div class="header_network_icon" fxLayout="row" fxFlex="100" fxFlex.xs="200" fxFlex.sm="250" fxLayoutAlign="center center">
                     <div>
-                        <img src="../../../assets/icon-youtube.png"/>
+                        <a href="{{ url_youtube }}" target="_blank"><img src="../../../assets/icon-youtube.png"/></a>
+                        <!-- <img src="../../../assets/icon-youtube.png"/><a href="https://br.linkedin.com/"></a> -->
                     </div>
                     <div>
-                        <img src="../../../assets/icon-github.png"/>
+                        <a href="{{ url_github }}" target="_blank"><img src="../../../assets/icon-github.png"/></a>
+                        <!-- <img src="../../../assets/icon-github.png"/> -->
                     </div>
                     <div>
-                        <img src="../../../assets/icon-linkedin.png"/>
+                        <a href="{{ url_linkedin }}" target="_blank"><img src="../../../assets/icon-linkedin.png"/></a>
+                        <!-- <img src="../../../assets/icon-linkedin.png"/> -->
                     </div>
                 </div>
                 <div class="header_network_access_system" fxLayout="row" fxFlex="100">
