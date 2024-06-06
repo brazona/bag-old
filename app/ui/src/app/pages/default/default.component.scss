@@ -141,4 +141,23 @@
 }
 .body_content_rigth {
     background-color: $dark_green_transp;
+    padding-top: 3%;
+}
+.body_content_rigth h2 {
+    color: $font_color;
+    font-family: $font;
+    font-size: 34px;
+    padding: 2%;
+    text-align: left;
+    justify-content: left;
+    //width: 100%;
+}
+.body_content_rigth p {
+    color: $font_color;
+    font-family: $font;
+    font-size: 14px;
+    //text-align: center;
+    padding: 2%;
+    //width: 100%;
+    justify-content: left;
 }
