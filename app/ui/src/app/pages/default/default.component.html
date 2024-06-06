@@ -110,8 +110,19 @@
             </ng-template> -->
     </div>
     <div class="footer" fxLayout="row" fxFlex="10">
-        footer
-        <span>screen type: {{currentScreenSize.type_screen}}</span> <br/> <span>screen type code:{{currentScreenSize.size}}</span> 
+        <div class="footer_left" fxFlex = "40">
+        </div>
+        <div class="footer_center" fxFlex = "50" fxLayoutAlign="start center">
+            <span>BRAZONA TECH ©</span>
+        </div>
+        <div class="footer_rigth" fxFlex="10" fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="2px" fxLayoutAlign="center center">
+            <div class="footer_rigth_icon" fxFlex="20" fxFlex.sm="40" fxFlex.xs="40">
+                <img src="../../../assets/versao 1.png" />
+            </div>
+            <div class="footer_rigth_versao" fxFlex="80" fxFlex.sm="60" fxFlex.xs="60">
+                <span>1.0.0</span>
+            </div>
+        </div>
     </div>
 </div>
 

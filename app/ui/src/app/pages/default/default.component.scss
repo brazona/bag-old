@@ -9,7 +9,7 @@
     background-size: cover;
     background-repeat: no-repeat;
 }
-.header {
+.header, .footer {
     background-color: $dark_green_transp;
 }
 #logotype-large {
@@ -135,13 +135,14 @@
     //background-color: black;
     //padding: 3%;
     margin-top: 5%;
+    margin-bottom: 3%;
 }
 .body_content_left {
     //background-color: whitesmoke;
 }
 .body_content_rigth {
     background-color: $dark_green_transp;
-    padding-top: 3%;
+    padding-top: 2%;
 }
 .body_content_rigth h2 {
     color: $font_color;
@@ -161,3 +162,28 @@
     //width: 100%;
     justify-content: left;
 }
+.footer_rigth_icon img {
+    width: 100%;
+}
+// .footer_rigth_versao {
+//     background-color: green;
+// }
+// .footer_left {
+//     background-color: yellow;
+// }
+.footer_rigth_versao span{
+    color: $font_color;
+    font-family: $font;
+    font-size: 16px;
+}
+.footer_center span{
+    color: $font_color;
+    font-family: $font;
+    font-size: 18px;
+}
+.footer_rigth {
+    padding-right: 0.5%;
+}
+// .footer_rigth_icon {
+//     background-color: black;
+// }
